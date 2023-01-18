@@ -8,9 +8,9 @@
     {"num": 7, "colour": "blue"},
     {"num": 8, "colour": "blue"},
     {"num": 9, "colour": "blue"},
-    {"num": null, "colour": "blue", "skip":true},
-    {"num": null, "colour": "blue", "plusNum": 2},
-    {"num": null, "colour": "blue", "reverse":true},
+    {"num": null, "colour": "blue", "type": "skip"},
+    {"num": null, "colour": "blue", "type": "plus", "plusNum": 2},
+    {"num": null, "colour": "blue", "type": "reverse"},
 
     {"num": 1, "colour": "red"},
     {"num": 2, "colour": "red"},
@@ -21,9 +21,9 @@
     {"num": 7, "colour": "red"},
     {"num": 8, "colour": "red"},
     {"num": 9, "colour": "red"},
-    {"num": null, "colour": "red", "skip":true},
-    {"num": null, "colour": "red", "plusNum": 2},
-    {"num": null, "colour": "red", "reverse":true},
+    {"num": null, "colour": "red", "type": "skip"},
+    {"num": null, "colour": "red", "type": "plus", "plusNum": 2},
+    {"num": null, "colour": "red", "type": "reverse"},
 
     {"num": 1, "colour": "yellow"},
     {"num": 2, "colour": "yellow"},
@@ -34,9 +34,9 @@
     {"num": 7, "colour": "yellow"},
     {"num": 8, "colour": "yellow"},
     {"num": 9, "colour": "yellow"},
-    {"num": null, "colour": "yellow", "skip":true},
-    {"num": null, "colour": "yellow", "plusNum": 2},
-    {"num": null, "colour": "yellow", "reverse":true},
+    {"num": null, "colour": "yellow", "type": "skip"},
+    {"num": null, "colour": "yellow", "type": "plus", "plusNum": 2},
+    {"num": null, "colour": "yellow", "type": "reverse"},
 
     {"num": 1, "colour": "green"},
     {"num": 2, "colour": "green"},
@@ -47,7 +47,17 @@
     {"num": 7, "colour": "green"},
     {"num": 8, "colour": "green"},
     {"num": 9, "colour": "green"},
-    {"num": null, "colour": "green", "skip":true},
-    {"num": null, "colour": "green", "plusNum": 2},
-    {"num": null, "colour": "green", "reverse":true}
+    {"num": null, "colour": "green", "type": "skip"},
+    {"num": null, "colour": "green", "type": "plus", "plusNum": 2},
+    {"num": null, "colour": "green", "type": "reverse"},
+
+    {"num": null, "type": "plus", "plusNum": 4, "changeColour": true},
+    {"num": null, "type": "plus", "plusNum": 4, "changeColour": true},
+    {"num": null, "type": "plus", "plusNum": 4, "changeColour": true},
+    {"num": null, "type": "plus", "plusNum": 4, "changeColour": true},
+
+    {"num": null, "type": "wild", "changeColour": true},
+    {"num": null, "type": "wild", "changeColour": true},
+    {"num": null, "type": "wild", "changeColour": true},
+    {"num": null, "type": "wild", "changeColour": true}
 ]
