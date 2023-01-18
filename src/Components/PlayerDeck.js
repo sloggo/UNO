@@ -6,19 +6,22 @@ export default function PlayerDeck(props) {
     useEffect(() =>{
         initiateCards();
         console.log(cards)
-    });
+    },[]);
 
     function initiateCards() {
         let newCards = []
 
         for (let i = 0; i < 9; i++) {
-            newCards.push(props.deck[Math.floor(Math.random()*props.deck.length)])
+            let newCard = props.deck[Math.floor(Math.random()*props.deck.length)]
+            console.log(newCard)
+            newCards.push(newCard)
           }
 
+        console.log(newCards)
         setCards(newCards)
     }
 
   return (
-    <div>PlayerDeck</div>
+    <div></div>
   )
 }
