@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 export default function PlayerDeck(props) {
-    const [cards, setCards] = useState();
-
-    useEffect(() =>{
-        initiateCards();
-        console.log(cards)
-    },[]);
+    const [cards, setCards] = useState(initiateCards());
 
     function initiateCards() {
         let newCards = []
@@ -16,12 +11,14 @@ export default function PlayerDeck(props) {
             console.log(newCard)
             newCards.push(newCard)
           }
-
-        console.log(newCards)
-        setCards(newCards)
+        return newCards
     }
 
   return (
-    <div></div>
+    <div>
+      {cards.map((card) => {
+        return <p key={card.number}>{card.colour}, {card.type}, {card.num}, {card.plusNum}</p>
+      })}
+    </div>
   )
 }

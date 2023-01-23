@@ -3,7 +3,8 @@ import unoDeck from "./deck.json";
 import PlayerDeck from './PlayerDeck'; 
 
 export default function Board(props) {
-    const [deck, setDeck] = useState(unoDeck)  
+    const [deck, setDeck] = useState(unoDeck)
+
 
     useEffect(() =>{
       console.log(unoDeck)
