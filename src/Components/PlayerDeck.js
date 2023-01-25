@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import "./PlayerDeck.css";
 
 export default function PlayerDeck(props) {
     const [cards, setCards] = useState(initiateCards());
@@ -15,7 +16,8 @@ export default function PlayerDeck(props) {
     }
 
   return (
-    <div>
+    <div className='playerDeckContainer'>
+      <h2>{props.id}</h2>
       {cards.map((card) => {
         return <p key={card.number}>{card.colour}, {card.type}, {card.num}, {card.plusNum}</p>
       })}
