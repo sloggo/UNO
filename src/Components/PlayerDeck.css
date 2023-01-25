@@ -1,0 +1,30 @@
+p[colour="green"]{
+    background-color: greenyellow;
+    color: black;
+}
+
+p[colour="blue"]{
+    background-color: aqua;
+    color: black;
+}
+
+p[colour="yellow"]{
+    background-color: rgb(255, 252, 47);
+    color: black;
+}
+
+p[colour="red"]{
+    background-color: rgb(255, 87, 87);
+    color: black;
+}
+
+p{
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
+h2.activePlayer{
+    color: blue;
+}
