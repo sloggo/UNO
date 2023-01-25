@@ -19,7 +19,9 @@ export default function PlayerDeck(props) {
     }
 
     function clickCard(card) {
-      console.log(card)
+      props.playerPlayCard(card)
+
+      let newCards = [...cards]
     }
 
   return (

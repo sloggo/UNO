@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 export default function Card(props) {
-    const[card, setCard] = useState(props.card)
+    const[card, setCard] = useState(props.card) // use state to easily pass up to board to set current card
 
     function clickCardComp(){
         props.clickCard(props.card)

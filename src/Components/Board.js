@@ -14,7 +14,7 @@ export default function Board(props) {
     })
 
     function playerPlayCard(card){
-
+      setCurrentCard(card)
     }
 
   return (
