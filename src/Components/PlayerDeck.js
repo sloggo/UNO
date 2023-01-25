@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import "./PlayerDeck.css";
+import Card from './Card';
 
 export default function PlayerDeck(props) {
     const [cards, setCards] = useState(initiateCards());
@@ -17,12 +18,15 @@ export default function PlayerDeck(props) {
         return newCards
     }
 
+    function clickCard(card) {
+      console.log(card)
+    }
+
   return (
     <div className='playerDeckContainer'>
-      { isPlayer ? <h2 className='activePlayer'>{props.id}</h2> : <h2>{props.id}</h2>}
+      { isPlayer ? <h2 className='activePlayer'>{props.id}</h2> : <h2>{props.id}</h2>} 
       {cards.map((card) => {
-        let text = isBot ? <p>...</p> : <p key={card.number} colour={card.colour}>{card.colour} {card.type} {card.num} {card.plusNum}</p>
-        return text
+        <Card card={card} isBot={isBot} isPlayer={isPlayer} clickCard={clickCard}></Card>
       })}
     </div>
   )

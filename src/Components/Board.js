@@ -13,13 +13,17 @@ export default function Board(props) {
       console.log(unoDeck)
     })
 
+    function playerPlayCard(card){
+
+    }
+
   return (
     <>
       <div className='boardDiv'>{props.noPlayers} Players</div>
       <h2>Current Go: {currentPlayer}</h2>
       <div className='playerDecks'>
         {players.map((player) => {
-          return <PlayerDeck deck={deck} key={player} id={player} currentCard={currentCard} currentPlayer={currentPlayer} ></PlayerDeck>
+          return <PlayerDeck deck={deck} key={player} id={player} currentCard={currentCard} currentPlayer={currentPlayer} playerPlayCard={playerPlayCard}></PlayerDeck>
         })}
       </div>
       <h1>Current: {currentCard.num} {currentCard.colour}</h1>
