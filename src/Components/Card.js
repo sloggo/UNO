@@ -9,7 +9,7 @@ export default function Card(props) {
 
   return (
     <>
-        {<p key={props.card.number} card={props.card} colour={props.card.colour} onClick={cardHandleClick}>
+        {<p key={props.card.number} card={props.card} colour={props.card.colour} onClick={cardHandleClick} fromdeck={props.fromDeck}>
             {props.card.colour} {props.card.type} {props.card.num} {props.card.plusNum}
         </p>}
     </>
