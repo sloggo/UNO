@@ -29,8 +29,24 @@ export default function PlayerDeck(props) {
 
     function validateMove(card){
       const currentCard = props.currentCard
+      let validCard = false
+      let validOwner = false
 
       if(card.colour === currentCard.colour || card.num === currentCard.num || card.type === currentCard.type){
+        validCard = true
+      } else{
+        validCard = false
+        console.log('Not playable!')
+      }
+
+      if(card.owner === props.id){
+        validOwner = true
+      } else{
+        validOwner = false
+        console.log('Not your card!')
+      }
+
+      if(validCard && validOwner){
         return true
       } else{
         return false
