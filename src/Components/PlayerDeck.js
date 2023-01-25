@@ -53,6 +53,16 @@ export default function PlayerDeck(props) {
       }
     }
 
+    function botMove(){
+      
+    }
+
+    useEffect(() => {
+      if((isPlayer === true) && (isBot === true)){ // if the player is next and a bot
+        botMove()
+      }
+    },[isPlayer])
+
   return (
     <div className='playerDeckContainer'>
       { isPlayer ? <h2 className='activePlayer'>{props.id}</h2> : <h2>{props.id}</h2>} 
