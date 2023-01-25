@@ -11,7 +11,6 @@ export default function PlayerDeck(props) {
     useEffect(() => {
       setCurrentPlayer(props.currentPlayer);
       setIsPlayer(currentPlayer === props.id ? true : false)
-      console.log(props.id, "isBot", isBot, "currentPlayer", currentPlayer, "isplayer", isPlayer)
     })
 
     function initiateCards() {
@@ -48,7 +47,7 @@ export default function PlayerDeck(props) {
       let validCard = false
       let validOwner = false
 
-      if(card.colour === currentCard.colour || card.num === currentCard.num || card.type === currentCard.type){
+      if(card.colour === currentCard.colour || card.num === currentCard.num || card.changeColour){
         validCard = true
       } else{
         validCard = false
@@ -67,6 +66,16 @@ export default function PlayerDeck(props) {
       } else{
         return false
       }
+    }
+
+    function getValidMoves(){
+      let validMoves = cards.filter((card) => { // create array of valid moves
+        if(validateMove(card)){
+          return true
+        } else{
+          return false
+        }
+      })
     }
 
     function botMove(){
