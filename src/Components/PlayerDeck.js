@@ -6,13 +6,19 @@ export default function PlayerDeck(props) {
     const [cards, setCards] = useState(initiateCards());
     const [isBot, setBot] = useState(props.id === "player"? false: true)
     const [currentPlayer, setCurrentPlayer] = useState(props.currentPlayer)
-    const [isPlayer, setIsPlayer] = useState(currentPlayer === props.id? true: false)
+    const [isPlayer, setIsPlayer] = useState()
+
+    useEffect(() => {
+      setCurrentPlayer(props.currentPlayer);
+      setIsPlayer(currentPlayer === props.id ? true : false)
+      console.log(props.id, "isBot", isBot, "currentPlayer", currentPlayer, "isplayer", isPlayer)
+    })
 
     function initiateCards() {
         let newCards = []
 
         for (let i = 0; i < 9; i++) {
-            let newCard = props.deck[Math.floor(Math.random()*props.deck.length)]
+            let newCard = {...props.deck[Math.floor(Math.random()*props.deck.length)]}
             newCard.owner = props.id
             newCards.push(newCard)
           }
@@ -23,9 +29,18 @@ export default function PlayerDeck(props) {
       console.log(card)
       if (validateMove(card)){
         props.playerPlayCard(card)
+        removeFromDeck(card)
       } else{
         console.log("Not valid card")
       }
+    }
+
+    function removeFromDeck(card){
+      let newCards = [...cards]
+      let removeIndex = cards.indexOf(card)
+
+      newCards.splice(removeIndex, 1)
+      setCards(newCards)
     }
 
     function validateMove(card){

@@ -15,7 +15,7 @@ export default function Board(props) {
 
     function playerPlayCard(card){
       setCurrentCard(card)
-      getNextPlayer()
+      setCurrentPlayer(getNextPlayer())
     }
 
     function getNextPlayer(){
@@ -26,7 +26,7 @@ export default function Board(props) {
         nextIndex = 0
       }
 
-      setCurrentPlayer(players[nextIndex])
+      return players[nextIndex]
     }
 
   return (
