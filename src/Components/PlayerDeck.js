@@ -16,9 +16,9 @@ export default function PlayerDeck(props) {
     function initiateCards() {
         let newCards = []
 
-        for (let i = 0; i < 9; i++) {
-            let newCard = {...props.deck[Math.floor(Math.random()*props.deck.length)]}
-            newCard.owner = props.id
+        for (let i = 0; i < 9; i++) { // cycles 9 times
+            let newCard = {...props.deck[Math.floor(Math.random()*props.deck.length)]} // selects random card
+            newCard.owner = props.id // adds owner attribute
             newCards.push(newCard)
           }
         return newCards
@@ -26,60 +26,66 @@ export default function PlayerDeck(props) {
 
     function clickCard(card) {
       console.log(card)
-      if (validateMove(card)){
-        props.playerPlayCard(card)
-        removeFromDeck(card)
+      if (validateMove(card)){ // if the move is valid
+        props.playerPlayCard(card) // pass up to board to change current card
+        removeFromDeck(card) // remove it from the deck
       } else{
         console.log("Not valid card")
       }
     }
 
     function removeFromDeck(card){
-      let newCards = [...cards]
-      let removeIndex = cards.indexOf(card)
+      let newCards = [...cards] // creates copy to not mess with react props
+      let removeIndex = cards.indexOf(card) // finds index to remove
 
-      newCards.splice(removeIndex, 1)
-      setCards(newCards)
+      newCards.splice(removeIndex, 1) // splices just the card to remove
+      setCards(newCards) // update player deck UI
     }
 
     function validateMove(card){
       const currentCard = props.currentCard
       let validCard = false
-      let validOwner = false
+      let validOwner = false // default values
 
-      if(card.colour === currentCard.colour || card.num === currentCard.num || card.changeColour){
-        validCard = true
+      if(card.colour === currentCard.colour || card.num === currentCard.num || card.changeColour){ // if the card is of the same number, colour or a wild/plus4
+        validCard = true // the actual card is legal to be played
       } else{
         validCard = false
         console.log('Not playable!')
       }
 
-      if(card.owner === currentPlayer){
-        validOwner = true
+      if(card.owner === currentPlayer){ // if current player owns the card chosen
+        validOwner = true // the owner is legal
       } else{
         validOwner = false
         console.log('Not your card!')
       }
 
-      if(validCard && validOwner){
-        return true
+      if(validCard && validOwner){ // if both owner and card is legal to be played
+        return true // allow the card to be played
       } else{
         return false
       }
     }
 
     function getValidMoves(){
-      let validMoves = cards.filter((card) => { // create array of valid moves
+      let validMoves = cards.filter((card) => { // create array of valid moves by filtering if the card is legal
         if(validateMove(card)){
           return true
         } else{
           return false
         }
       })
+
+      return validMoves
     }
 
     function botMove(){
       console.log('bot must move')
+      let movePool = getValidMoves()
+
+      const chosenCard = movePool[Math.floor(Math.random()*movePool.length)] // choose randomly from pool of legal moves
+      clickCard(chosenCard)
     }
 
     useEffect(() => {
