@@ -5,7 +5,8 @@ import Card from './Card';
 export default function PlayerDeck(props) {
     const [cards, setCards] = useState(initiateCards());
     const [isBot, setBot] = useState(props.id === "player"? false: true)
-    const [isPlayer, setIsPlayer] = useState(props.currentPlayer === props.id? true: false)
+    const [currentPlayer, setCurrentPlayer] = useState(props.currentPlayer)
+    const [isPlayer, setIsPlayer] = useState(currentPlayer === props.id? true: false)
 
     function initiateCards() {
         let newCards = []
@@ -54,7 +55,7 @@ export default function PlayerDeck(props) {
     }
 
     function botMove(){
-      
+      console.log('bot must move')
     }
 
     useEffect(() => {
