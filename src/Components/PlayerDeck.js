@@ -22,11 +22,19 @@ export default function PlayerDeck(props) {
       console.log(card)
       if (validateMove(card)){
         props.playerPlayCard(card)
+      } else{
+        console.log("Not valid card")
       }
     }
 
     function validateMove(card){
+      const currentCard = props.currentCard
 
+      if(card.colour === currentCard.colour || card.num === currentCard.num || card.type === currentCard.type){
+        return true
+      } else{
+        return false
+      }
     }
 
   return (
