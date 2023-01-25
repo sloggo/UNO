@@ -26,7 +26,7 @@ export default function PlayerDeck(props) {
     <div className='playerDeckContainer'>
       { isPlayer ? <h2 className='activePlayer'>{props.id}</h2> : <h2>{props.id}</h2>} 
       {cards.map((card) => {
-        <Card card={card} isBot={isBot} isPlayer={isPlayer} clickCard={clickCard}></Card>
+        return <Card card={card} isBot={isBot} isPlayer={isPlayer} clickCard={clickCard}></Card>
       })}
     </div>
   )
