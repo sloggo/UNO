@@ -14,7 +14,19 @@ export default function Board(props) {
     })
 
     function playerPlayCard(card){
+      setCurrentCard(card)
+      getNextPlayer()
+    }
 
+    function getNextPlayer(){
+      const currentIndex = players.indexOf(currentPlayer)
+      let nextIndex = currentIndex + 1
+
+      if(players.length < nextIndex+1){
+        nextIndex = 0
+      }
+
+      setCurrentPlayer(players[nextIndex])
     }
 
   return (

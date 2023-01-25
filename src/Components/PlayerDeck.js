@@ -12,7 +12,7 @@ export default function PlayerDeck(props) {
 
         for (let i = 0; i < 9; i++) {
             let newCard = props.deck[Math.floor(Math.random()*props.deck.length)]
-            console.log(newCard)
+            newCard.owner = props.id
             newCards.push(newCard)
           }
         return newCards
