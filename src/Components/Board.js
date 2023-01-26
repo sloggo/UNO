@@ -22,7 +22,7 @@ export default function Board(props) {
       } else if(card.skip){
         setCurrentCard(card)
 
-        toggleSkipPlayer(currentCard, getNextPlayerIndex()) // turn on skip for next player
+        toggleSkipPlayer(currentPlayer, getNextPlayerIndex()) // turn on skip for next player
 
       } else if(card === "skipped"){
 
@@ -116,7 +116,7 @@ export default function Board(props) {
           return <PlayerDeck currentPlayer={currentPlayer} skipped={player.skipped} deck={deck} key={player.player} id={player.player} currentCard={currentCard} current={player.current} isBot={player.isBot} playerPlayCard={playerPlayCard}></PlayerDeck>
         })}
       </div>
-      <h1>Current: {currentCard.num} {currentCard.colour}</h1>
+      <h1>Current: {currentCard.num} {currentCard.colour} {currentCard.type}</h1>
     </>
   )
 }
