@@ -4,15 +4,15 @@ import Card from './Card';
 
 export default function PlayerDeck(props) {
     const [cards, setCards] = useState(initiateCards());
-    const [isBot, setBot] = useState(props.id === "player"? false: true)
+    const [isBot, setBot] = useState(props.id.isBot)
     const [currentPlayer, setCurrentPlayer] = useState(props.currentPlayer)
-    const [isPlayer, setIsPlayer] = useState()
-    const [isSkipped, setIsSkipped] = useState(false)
+    const [isPlayer, setIsPlayer] = useState(props.current)
+    const [isSkipped, setIsSkipped] = useState(props.skipped)
 
     useEffect(() => {
       setCurrentPlayer(props.currentPlayer);
-      setIsPlayer(currentPlayer === props.id ? true : false)
-      setIsSkipped(props.skippedPlayer === props.id? true: false)
+      setIsPlayer(props.current)
+      setIsSkipped(props.skipped)
     })
 
     useEffect(() => {
