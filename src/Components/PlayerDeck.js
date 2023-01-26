@@ -7,11 +7,17 @@ export default function PlayerDeck(props) {
     const [isBot, setBot] = useState(props.id === "player"? false: true)
     const [currentPlayer, setCurrentPlayer] = useState(props.currentPlayer)
     const [isPlayer, setIsPlayer] = useState()
+    const [isSkipped, setIsSkipped] = useState(false)
 
     useEffect(() => {
       setCurrentPlayer(props.currentPlayer);
       setIsPlayer(currentPlayer === props.id ? true : false)
+      setIsSkipped(props.skippedPlayer === props.id? true: false)
     })
+
+    useEffect(() => {
+      
+    }, [isSkipped])
 
     function randomCard() { 
       let newCard = {...props.deck[Math.floor(Math.random()*props.deck.length)]} // selects random card
@@ -52,7 +58,7 @@ export default function PlayerDeck(props) {
       let validCard = false
       let validOwner = false // default values
 
-      if(card.colour === currentCard.colour || card.num === currentCard.num || card.changeColour){ // if the card is of the same number, colour or a wild/plus4
+      if(card.colour === currentCard.colour || card.num === currentCard.num || card.changeColour === true){ // if the card is of the same number, colour or a wild/plus4
         validCard = true // the actual card is legal to be played
       } else{
         validCard = false

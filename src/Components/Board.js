@@ -8,6 +8,7 @@ export default function Board(props) {
     const [currentCard, setCurrentCard] = useState(deck[Math.floor(Math.random()*deck.length)])
     const [players, setPlayers] = useState(["player", "bot1", "bot2", "bot3"])
     const [currentPlayer , setCurrentPlayer] = useState(players[0])
+    const [skippedPlayer, setSkippedPlayer] = useState(null)
 
     useEffect(() =>{
       console.log(unoDeck)
@@ -16,10 +17,21 @@ export default function Board(props) {
     function playerPlayCard(card){
       if(card === "pickUp"){
         setCurrentPlayer(getNextPlayer())
-      } else{
+      } else if(card.skip){
+        setCurrentCard(card)
+        setSkippedPlayer(getNextPlayer())
+        setCurrentPlayer(getNextPlayer())
+      } else if("skipped"){
+        setSkippedPlayer(null)
+        setCurrentPlayer(getNextPlayer())
+      }else{
         setCurrentCard(card)
         setCurrentPlayer(getNextPlayer())
       }
+    }
+
+    function skipNext(){
+      
     }
 
     function getNextPlayer(){
@@ -39,7 +51,7 @@ export default function Board(props) {
       <h2>Current Go: {currentPlayer}</h2>
       <div className='playerDecks'>
         {players.map((player) => {
-          return <PlayerDeck deck={deck} key={player} id={player} currentCard={currentCard} currentPlayer={currentPlayer} playerPlayCard={playerPlayCard}></PlayerDeck>
+          return <PlayerDeck skippedPlayer={skippedPlayer} deck={deck} key={player} id={player} currentCard={currentCard} currentPlayer={currentPlayer} playerPlayCard={playerPlayCard}></PlayerDeck>
         })}
       </div>
       <h1>Current: {currentCard.num} {currentCard.colour}</h1>
