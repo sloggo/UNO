@@ -10,43 +10,48 @@ export default function Board(props) {
     {"player": 1, "skipped": false , "isBot": false, "current": false},
     {"player": 2, "skipped": false , "isBot": false, "current": false},
     {"player": 3, "skipped": false , "isBot": false, "current": false}])
-    const [currentPlayer , setCurrentPlayer] = useState(players[0])
+    const [currentPlayer , setCurrentPlayer] = useState(0)
 
     useEffect(() =>{
-      console.log(unoDeck)
-      console.log(currentPlayer)
+      console.log(players)
     })
 
     function playerPlayCard(card){
       if(card === "pickUp"){
-        toggleCurrentPlayer(getNextPlayer())
-        setCurrentPlayer(getNextPlayer())
+        toggleCurrentPlayer(currentPlayer) // current = false on last current player
+        toggleCurrentPlayer(getNextPlayerIndex()) // current = true on new current player
+        setCurrentPlayer(getNextPlayerIndex())
       } else if(card.skip){
         setCurrentCard(card)
 
-        toggleSkipPlayer(getNextPlayer())
+        toggleSkipPlayer(getNextPlayerIndex()) // turn on skip for next player
 
-        toggleCurrentPlayer(getNextPlayer())
-        setCurrentPlayer(getNextPlayer())
+        toggleCurrentPlayer(currentPlayer) // current = false on last current player
+        toggleCurrentPlayer(getNextPlayerIndex()) // current = true on new current player
+        setCurrentPlayer(getNextPlayerIndex())
       } else if("skipped"){
-        toggleSkipPlayer(getCurrentPlayerIndex())
+        toggleSkipPlayer(currentPlayer) // turn off skip
 
-        toggleCurrentPlayer(getNextPlayer())
-        setCurrentPlayer(getNextPlayer())
+        toggleCurrentPlayer(currentPlayer) // current = false on last current player
+        toggleCurrentPlayer(getNextPlayerIndex()) // current = true on new current player
+        setCurrentPlayer(getNextPlayerIndex())
       }else{
         setCurrentCard(card)
 
-        toggleCurrentPlayer(getNextPlayer())
-        setCurrentPlayer(getNextPlayer())
+        toggleCurrentPlayer(currentPlayer) // current = false on last current player
+        toggleCurrentPlayer(getNextPlayerIndex()) // current = true on new current player
+        setCurrentPlayer(getNextPlayerIndex())
       }
     }
 
     function toggleSkipPlayer(indexPlayer){
-      let newPlayer = {...players[indexPlayer]}
+      let newPlayer = structuredClone(players[indexPlayer]);
       let newPlayers = [...players]
 
       newPlayer.skipped = !newPlayer.skipped
       newPlayers.splice(indexPlayer, 1, newPlayer)
+
+      console.log(newPlayer)
 
       setPlayers(newPlayers)
     }
@@ -58,23 +63,20 @@ export default function Board(props) {
       newPlayer.current = !newPlayer.current
       newPlayers.splice(indexPlayer, 1, newPlayer)
 
+      console.log(newPlayer)
+
       setPlayers(newPlayers)
     }
 
-    function getCurrentPlayerIndex(){
-      const currentIndex = players.indexOf(currentPlayer)
-      return currentIndex
-    }
-
-    function getNextPlayer(){
-      const currentIndex = players.indexOf(currentPlayer)
+    function getNextPlayerIndex(){
+      const currentIndex = currentPlayer
       let nextIndex = currentIndex + 1
 
       if(players.length < nextIndex+1){
         nextIndex = 0
       }
 
-      return players[nextIndex]
+      return nextIndex
     }
 
   return (
@@ -83,7 +85,7 @@ export default function Board(props) {
       <h2>Current Go: {currentPlayer}</h2>
       <div className='playerDecks'>
         {players.map((player) => {
-          return <PlayerDeck skipped={player.skipped} deck={deck} key={player.player} id={player.player} currentCard={currentCard} current={player.current} isBot={player.isBot} playerPlayCard={playerPlayCard}></PlayerDeck>
+          return <PlayerDeck currentPlayer={currentPlayer} skipped={player.skipped} deck={deck} key={player.player} id={player.player} currentCard={currentCard} current={player.current} isBot={player.isBot} playerPlayCard={playerPlayCard}></PlayerDeck>
         })}
       </div>
       <h1>Current: {currentCard.num} {currentCard.colour}</h1>

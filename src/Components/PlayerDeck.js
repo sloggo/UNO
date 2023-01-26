@@ -4,7 +4,7 @@ import Card from './Card';
 
 export default function PlayerDeck(props) {
     const [cards, setCards] = useState(initiateCards());
-    const [isBot, setBot] = useState(props.id.isBot)
+    const [isBot, setBot] = useState(props.id.isbot)
     const [currentPlayer, setCurrentPlayer] = useState(props.currentPlayer)
     const [isPlayer, setIsPlayer] = useState(props.current)
     const [isSkipped, setIsSkipped] = useState(props.skipped)
@@ -16,8 +16,9 @@ export default function PlayerDeck(props) {
     })
 
     useEffect(() => {
-      console.log(props.skippedPlayer, isSkipped, "skipped")
-      playerSkipped()
+      if(isSkipped){
+        playerSkipped()
+      }
     }, [isSkipped])
 
     function playerSkipped(){
@@ -34,7 +35,7 @@ export default function PlayerDeck(props) {
     }
 
     function randomCard() { 
-      let newCard = {...props.deck[Math.floor(Math.random()*props.deck.length)]} // selects random card
+      let newCard = structuredClone(props.deck[Math.floor(Math.random()*props.deck.length)]); // selects random card
       newCard.owner = props.id // adds owner attribute
 
       return newCard
@@ -72,6 +73,9 @@ export default function PlayerDeck(props) {
       let validCard = false
       let validOwner = false // default values
 
+      let currentPlayerIndex = props.currentPlayer
+      console.log(currentPlayerIndex)
+
       if(card.colour === currentCard.colour || card.num === currentCard.num || card.changeColour === true){ // if the card is of the same number, colour or a wild/plus4
         validCard = true // the actual card is legal to be played
       } else{
@@ -79,7 +83,7 @@ export default function PlayerDeck(props) {
         console.log('Not playable!')
       }
 
-      if(card.owner === currentPlayer){ // if current player owns the card chosen
+      if(card.owner === props.currentPlayer){ // if current player owns the card chosen
         validOwner = true // the owner is legal
       } else{
         validOwner = false
