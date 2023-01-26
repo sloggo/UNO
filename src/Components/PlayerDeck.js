@@ -24,8 +24,7 @@ export default function PlayerDeck(props) {
         let newCards = []
 
         for (let i = 0; i < 9; i++) { // cycles 9 times
-            
-            newCards.push(newCard)
+            newCards.push(randomCard())
           }
         return newCards
     }
@@ -86,6 +85,17 @@ export default function PlayerDeck(props) {
       return validMoves
     }
 
+    function pickUp(){
+      if(isPlayer){
+        let newCards = [...cards]
+        newCards.push(randomCard()) // add a new random card
+
+        setCards(newCards)
+      } else{
+        console.log("Not your turn!")
+      }
+    }
+
     function botMove(){
       console.log('bot must move')
       let movePool = getValidMoves()
@@ -103,6 +113,7 @@ export default function PlayerDeck(props) {
   return (
     <div className='playerDeckContainer'>
       { isPlayer ? <h2 className='activePlayer'>{props.id}</h2> : <h2>{props.id}</h2>} 
+      <button onClick={pickUp}>Pick Up Card</button>
       {cards.map((card) => {
         return <Card card={card} isBot={isBot} isPlayer={isPlayer} clickCard={clickCard} fromdeck={props.id}></Card>
       })}
