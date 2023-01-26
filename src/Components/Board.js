@@ -14,8 +14,12 @@ export default function Board(props) {
     })
 
     function playerPlayCard(card){
-      setCurrentCard(card)
-      setCurrentPlayer(getNextPlayer())
+      if(card === "pickUp"){
+        setCurrentPlayer(getNextPlayer())
+      } else{
+        setCurrentCard(card)
+        setCurrentPlayer(getNextPlayer())
+      }
     }
 
     function getNextPlayer(){

@@ -89,6 +89,7 @@ export default function PlayerDeck(props) {
       if(isPlayer){
         let newCards = [...cards]
         newCards.push(randomCard()) // add a new random card
+        props.playerPlayCard("pickUp")
 
         setCards(newCards)
       } else{
