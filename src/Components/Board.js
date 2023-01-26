@@ -7,9 +7,9 @@ export default function Board(props) {
     const [deck, setDeck] = useState(unoDeck)
     const [currentCard, setCurrentCard] = useState(deck[Math.floor(Math.random()*deck.length)])
     const [players, setPlayers] = useState([{"player": 0, "skipped": false , "isBot": false, "current": true},
-    {"player": 1, "skipped": false , "isBot": false, "current": false},
-    {"player": 2, "skipped": false , "isBot": false, "current": false},
-    {"player": 3, "skipped": false , "isBot": false, "current": false}])
+    {"player": 1, "skipped": false , "isBot": true, "current": false},
+    {"player": 2, "skipped": false , "isBot": true, "current": false},
+    {"player": 3, "skipped": false , "isBot": true, "current": false}])
     const [currentPlayer , setCurrentPlayer] = useState(0)
 
     useEffect(() =>{
@@ -18,54 +18,82 @@ export default function Board(props) {
 
     function playerPlayCard(card){
       if(card === "pickUp"){
-        toggleCurrentPlayer(currentPlayer) // current = false on last current player
-        toggleCurrentPlayer(getNextPlayerIndex()) // current = true on new current player
-        setCurrentPlayer(getNextPlayerIndex())
+        toggleCurrentPlayer(currentPlayer, getNextPlayerIndex())
       } else if(card.skip){
         setCurrentCard(card)
 
-        toggleSkipPlayer(getNextPlayerIndex()) // turn on skip for next player
+        toggleSkipPlayer(currentCard, getNextPlayerIndex()) // turn on skip for next player
 
-        toggleCurrentPlayer(currentPlayer) // current = false on last current player
-        toggleCurrentPlayer(getNextPlayerIndex()) // current = true on new current player
-        setCurrentPlayer(getNextPlayerIndex())
-      } else if("skipped"){
-        toggleSkipPlayer(currentPlayer) // turn off skip
+      } else if(card === "skipped"){
 
-        toggleCurrentPlayer(currentPlayer) // current = false on last current player
-        toggleCurrentPlayer(getNextPlayerIndex()) // current = true on new current player
-        setCurrentPlayer(getNextPlayerIndex())
+        resetSkipPlayer(currentPlayer, getNextPlayerIndex())
       }else{
         setCurrentCard(card)
 
-        toggleCurrentPlayer(currentPlayer) // current = false on last current player
-        toggleCurrentPlayer(getNextPlayerIndex()) // current = true on new current player
-        setCurrentPlayer(getNextPlayerIndex())
+        toggleCurrentPlayer(currentPlayer, getNextPlayerIndex()) // current = false on last current player 
       }
     }
 
-    function toggleSkipPlayer(indexPlayer){
-      let newPlayer = structuredClone(players[indexPlayer]);
+    function toggleSkipPlayer(curPly, nxtPly){
+      let curPlayerEdit = {...players[curPly]}
+      let nxtPlayerEdit = {...players[nxtPly]}
+
       let newPlayers = [...players]
 
-      newPlayer.skipped = !newPlayer.skipped
-      newPlayers.splice(indexPlayer, 1, newPlayer)
+      curPlayerEdit.current = false
+      newPlayers.splice(curPly, 1, curPlayerEdit)
 
-      console.log(newPlayer)
+      nxtPlayerEdit.current = true
+      nxtPlayerEdit.skipped = true
+      newPlayers.splice(nxtPly, 1, nxtPlayerEdit)
+
+      console.log("updated players",newPlayers)
+
+      console.log(newPlayers)
 
       setPlayers(newPlayers)
+      setCurrentPlayer(nxtPly)
     }
 
-    function toggleCurrentPlayer(indexPlayer){
-      let newPlayer = {...players[indexPlayer]}
+    function resetSkipPlayer(curPly, nxtPly){
+      let curPlayerEdit = {...players[curPly]}
+      let nxtPlayerEdit = {...players[nxtPly]}
+
       let newPlayers = [...players]
 
-      newPlayer.current = !newPlayer.current
-      newPlayers.splice(indexPlayer, 1, newPlayer)
+      curPlayerEdit.current = false
+      curPlayerEdit.skipped = false
+      newPlayers.splice(curPly, 1, curPlayerEdit)
 
-      console.log(newPlayer)
+      nxtPlayerEdit.current = true
+      newPlayers.splice(nxtPly, 1, nxtPlayerEdit)
+
+      console.log("updated players",newPlayers)
+
+      console.log(newPlayers)
 
       setPlayers(newPlayers)
+      setCurrentPlayer(nxtPly)
+    }
+
+    function toggleCurrentPlayer(curPly, nxtPly){
+      let curPlayerEdit = {...players[curPly]}
+      let nxtPlayerEdit = {...players[nxtPly]}
+
+      let newPlayers = [...players]
+
+      curPlayerEdit.current = false
+      newPlayers.splice(curPly, 1, curPlayerEdit)
+
+      nxtPlayerEdit.current = true
+      newPlayers.splice(nxtPly, 1, nxtPlayerEdit)
+
+      console.log("updated players",newPlayers)
+
+      console.log(newPlayers)
+
+      setPlayers(newPlayers)
+      setCurrentPlayer(nxtPly)
     }
 
     function getNextPlayerIndex(){

@@ -4,12 +4,13 @@ import Card from './Card';
 
 export default function PlayerDeck(props) {
     const [cards, setCards] = useState(initiateCards());
-    const [isBot, setBot] = useState(props.id.isbot)
+    const [isBot, setBot] = useState(props.isBot)
     const [currentPlayer, setCurrentPlayer] = useState(props.currentPlayer)
     const [isPlayer, setIsPlayer] = useState(props.current)
     const [isSkipped, setIsSkipped] = useState(props.skipped)
 
     useEffect(() => {
+      setBot(props.isBot)
       setCurrentPlayer(props.currentPlayer);
       setIsPlayer(props.current)
       setIsSkipped(props.skipped)
@@ -22,7 +23,6 @@ export default function PlayerDeck(props) {
     }, [isSkipped])
 
     function playerSkipped(){
-      if(isSkipped){
         if(props.currentCard.plusNum){ // if the card just played has a plus attribute
           for (let i = 0; i < props.currentCard.plusNum; i++) { // pick up a card for how much the plus attribute is
             pickUp(false)
@@ -31,7 +31,6 @@ export default function PlayerDeck(props) {
         } else{
           props.playerPlayCard("skipped") // skip players go
         }
-      }
     }
 
     function randomCard() { 
