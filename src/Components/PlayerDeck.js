@@ -13,12 +13,18 @@ export default function PlayerDeck(props) {
       setIsPlayer(currentPlayer === props.id ? true : false)
     })
 
+    function randomCard() { 
+      let newCard = {...props.deck[Math.floor(Math.random()*props.deck.length)]} // selects random card
+      newCard.owner = props.id // adds owner attribute
+
+      return newCard
+    }
+
     function initiateCards() {
         let newCards = []
 
         for (let i = 0; i < 9; i++) { // cycles 9 times
-            let newCard = {...props.deck[Math.floor(Math.random()*props.deck.length)]} // selects random card
-            newCard.owner = props.id // adds owner attribute
+            
             newCards.push(newCard)
           }
         return newCards
