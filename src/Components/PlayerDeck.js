@@ -16,8 +16,22 @@ export default function PlayerDeck(props) {
     })
 
     useEffect(() => {
-      
+      console.log(props.skippedPlayer, isSkipped, "skipped")
+      playerSkipped()
     }, [isSkipped])
+
+    function playerSkipped(){
+      if(isSkipped){
+        if(props.currentCard.plusNum){ // if the card just played has a plus attribute
+          for (let i = 0; i < props.currentCard.plusNum; i++) { // pick up a card for how much the plus attribute is
+            pickUp(false)
+          }
+          props.playerPlayCard("skipped")
+        } else{
+          props.playerPlayCard("skipped") // skip players go
+        }
+      }
+    }
 
     function randomCard() { 
       let newCard = {...props.deck[Math.floor(Math.random()*props.deck.length)]} // selects random card
@@ -91,11 +105,14 @@ export default function PlayerDeck(props) {
       return validMoves
     }
 
-    function pickUp(){
+    function pickUp(endGo = true){
       if(isPlayer){
         let newCards = [...cards]
         newCards.push(randomCard()) // add a new random card
-        props.playerPlayCard("pickUp")
+
+        if(endGo){ // to allow plus 4s to pick up 4 in one go
+          props.playerPlayCard("pickUp")
+        }
 
         setCards(newCards)
       } else{
@@ -117,7 +134,11 @@ export default function PlayerDeck(props) {
 
     useEffect(() => {
       if((isPlayer === true) && (isBot === true)){ // if the player is next and a bot
-        botMove()
+        if(isSkipped){
+          playerSkipped()
+        } else{
+          botMove()
+        }
       }
     },[isPlayer])
 

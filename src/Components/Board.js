@@ -12,6 +12,8 @@ export default function Board(props) {
 
     useEffect(() =>{
       console.log(unoDeck)
+      console.log(currentPlayer)
+      console.log(skippedPlayer)
     })
 
     function playerPlayCard(card){
