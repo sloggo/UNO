@@ -101,8 +101,12 @@ export default function PlayerDeck(props) {
       console.log('bot must move')
       let movePool = getValidMoves()
 
-      const chosenCard = movePool[Math.floor(Math.random()*movePool.length)] // choose randomly from pool of legal moves
-      clickCard(chosenCard)
+      if(movePool.length < 0){
+        pickUp() // if no valid pick up
+      } else{
+        const chosenCard = movePool[Math.floor(Math.random()*movePool.length)] // choose randomly from pool of legal moves
+        clickCard(chosenCard)
+      }
     }
 
     useEffect(() => {
