@@ -8,8 +8,8 @@
     {"num": 7, "colour": "blue"},
     {"num": 8, "colour": "blue"},
     {"num": 9, "colour": "blue"},
-    {"num": null, "colour": "blue", "type": "skip"},
-    {"num": null, "colour": "blue", "type": "plus", "plusNum": 2},
+    {"num": null, "colour": "blue", "type": "skip", "skip": true},
+    {"num": null, "colour": "blue", "type": "plus", "plusNum": 2, "skip": true},
     {"num": null, "colour": "blue", "type": "reverse"},
 
     {"num": 1, "colour": "red"},
@@ -21,7 +21,7 @@
     {"num": 7, "colour": "red"},
     {"num": 8, "colour": "red"},
     {"num": 9, "colour": "red"},
-    {"num": null, "colour": "red", "type": "skip"},
+    {"num": null, "colour": "red", "type": "skip", "skip": true},
     {"num": null, "colour": "red", "type": "plus", "plusNum": 2, "skip": true},
     {"num": null, "colour": "red", "type": "reverse"},
 
@@ -34,7 +34,7 @@
     {"num": 7, "colour": "yellow"},
     {"num": 8, "colour": "yellow"},
     {"num": 9, "colour": "yellow"},
-    {"num": null, "colour": "yellow", "type": "skip"},
+    {"num": null, "colour": "yellow", "type": "skip", "skip": true},
     {"num": null, "colour": "yellow", "type": "plus", "plusNum": 2, "skip": true},
     {"num": null, "colour": "yellow", "type": "reverse"},
 

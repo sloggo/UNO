@@ -16,7 +16,12 @@ export default function Board(props) {
       console.log(players)
     })
 
-    function playerPlayCard(card){
+    const delay = ms => new Promise(
+      resolve => setTimeout(resolve, ms)
+    );
+
+    async function playerPlayCard(card){
+      await delay(1000);
       if(card === "pickUp"){
         toggleCurrentPlayer(currentPlayer, getNextPlayerIndex())
       } else if(card.skip){

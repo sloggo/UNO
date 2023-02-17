@@ -22,12 +22,13 @@ export default function PlayerDeck(props) {
       }
     }, [isSkipped])
 
+    const delay = ms => new Promise(
+      resolve => setTimeout(resolve, ms)
+    );
+
     function playerSkipped(){
         if(props.currentCard.plusNum){ // if the card just played has a plus attribute
-          for (let i = 0; i < props.currentCard.plusNum; i++) { // pick up a card for how much the plus attribute is
-            pickUp(false)
-          }
-          props.playerPlayCard("skipped")
+          pickUp(props.currentCard.plusNum)
         } else{
           props.playerPlayCard("skipped") // skip players go
         }
@@ -108,16 +109,15 @@ export default function PlayerDeck(props) {
       return validMoves
     }
 
-    function pickUp(endGo = true){
+    async function pickUp(plusNum = 1){
       if(isPlayer){
         let newCards = [...cards]
-        newCards.push(randomCard()) // add a new random card
-
-        if(endGo){ // to allow plus 4s to pick up 4 in one go
-          props.playerPlayCard("pickUp")
+        for (let i = 0 ; i < plusNum; i++){
+          await delay(1000);
+          newCards.push(randomCard()) // add a new random card
         }
-
         setCards(newCards)
+        props.playerPlayCard("pickUp")
       } else{
         console.log("Not your turn!")
       }
