@@ -37,7 +37,8 @@ export default function PlayerDeck(props) {
     function randomCard() { 
       let newCard = structuredClone(props.deck[Math.floor(Math.random()*props.deck.length)]); // selects random card
       newCard.owner = props.id // adds owner attribute
-      newCard.id = useId()
+      const cardId = useId()
+      newCard.id = cardId
 
       return newCard
     }
