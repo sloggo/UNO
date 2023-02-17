@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useId, useState } from 'react'
 import "./PlayerDeck.css";
 import Card from './Card';
 
@@ -37,6 +37,7 @@ export default function PlayerDeck(props) {
     function randomCard() { 
       let newCard = structuredClone(props.deck[Math.floor(Math.random()*props.deck.length)]); // selects random card
       newCard.owner = props.id // adds owner attribute
+      newCard.id = useId()
 
       return newCard
     }
@@ -113,10 +114,10 @@ export default function PlayerDeck(props) {
       if(isPlayer){
         let newCards = [...cards]
         for (let i = 0 ; i < plusNum; i++){
-          await delay(1000);
           newCards.push(randomCard()) // add a new random card
+          setCards(newCards)
+          await delay(1000);
         }
-        setCards(newCards)
         props.playerPlayCard("pickUp")
       } else{
         console.log("Not your turn!")
