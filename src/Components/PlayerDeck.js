@@ -61,9 +61,10 @@ export default function PlayerDeck(props) {
       }
     }
 
-    function removeFromDeck(card){
+    function removeFromDeck(toRemove){
       let newCards = [...cards] // creates copy to not mess with react props
-      let removeIndex = cards.indexOf(card) // finds index to remove
+      let removeIndex = newCards.findIndex(card => card.id === toRemove.id) // find index to remove
+
 
       newCards.splice(removeIndex, 1) // splices just the card to remove
       setCards(newCards) // update player deck UI
