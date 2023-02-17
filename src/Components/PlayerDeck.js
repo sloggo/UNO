@@ -1,6 +1,7 @@
 import React, { useEffect, useId, useState } from 'react'
 import "./PlayerDeck.css";
 import Card from './Card';
+import {default as UUID} from "node-uuid";
 
 export default function PlayerDeck(props) {
     const [cards, setCards] = useState(initiateCards());
@@ -37,8 +38,7 @@ export default function PlayerDeck(props) {
     function randomCard() { 
       let newCard = structuredClone(props.deck[Math.floor(Math.random()*props.deck.length)]); // selects random card
       newCard.owner = props.id // adds owner attribute
-      const cardId = useId()
-      newCard.id = cardId
+      newCard.id = UUID.v4();
 
       return newCard
     }
@@ -65,7 +65,6 @@ export default function PlayerDeck(props) {
     function removeFromDeck(toRemove){
       let newCards = [...cards] // creates copy to not mess with react props
       let removeIndex = newCards.findIndex(card => card.id === toRemove.id) // find index to remove
-
 
       newCards.splice(removeIndex, 1) // splices just the card to remove
       setCards(newCards) // update player deck UI
@@ -117,9 +116,8 @@ export default function PlayerDeck(props) {
         let newCards = [...cards]
         for (let i = 0 ; i < plusNum; i++){
           newCards.push(randomCard()) // add a new random card
-          setCards(newCards)
-          await delay(1000);
         }
+        setCards(newCards)
         props.playerPlayCard("pickUp")
       } else{
         console.log("Not your turn!")

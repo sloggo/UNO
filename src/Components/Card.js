@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function Card(props) {
   const [card, setCard] = useState(props.card)
@@ -6,6 +6,10 @@ export default function Card(props) {
   function cardHandleClick(){
     props.clickCard(card)
   }
+
+  useEffect(()=>{
+    setCard(props.card)
+  })
 
   return (
     <>
