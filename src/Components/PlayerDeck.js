@@ -143,7 +143,31 @@ export default function PlayerDeck(props) {
 
     function colourChoose(){
       setChoosingColour(true)
+      if(isBot){
+        colourChosen(botChooseColour())
+      }
     }
+
+    function botChooseColour(){
+      const botCards = [...cards]
+      const noYellow = botCards.filter(card => card.colour === "yellow").length // find amount of each colour in deck
+      const noRed = botCards.filter(card => card.colour === "red").length
+      const noBlue = botCards.filter(card => card.colour === "blue").length
+      const noGreen = botCards.filter(card => card.colour === "green").length
+
+      const largest = Math.max(noBlue, noGreen, noYellow, noRed)
+
+      if(noYellow === largest){ // choose most frequent card in deck
+        return "yellow"
+      } else if(noBlue === largest){
+        return "blue"
+      } else if(noGreen === largest){
+        return "green"
+      } else if(noRed === largest){
+        return "red"
+      }
+    }
+    
 
     function colourChosen(colour){
       props.playerPlayCard(colour)
