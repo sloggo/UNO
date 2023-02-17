@@ -29,6 +29,18 @@ export default function Board(props) {
 
         toggleSkipPlayer(currentPlayer, getNextPlayerIndex()) // turn on skip for next player
 
+      } else if(card === "red"){
+        setCurrentCard({"colour": "red", "num": "any"})
+        toggleCurrentPlayer(currentPlayer, getNextPlayerIndex())
+      }else if(card === "blue"){
+        setCurrentCard({"colour": "blue", "num": "any"})
+        toggleCurrentPlayer(currentPlayer, getNextPlayerIndex())
+      }else if(card === "green"){
+        setCurrentCard({"colour": "green", "num": "any"})
+        toggleCurrentPlayer(currentPlayer, getNextPlayerIndex())
+      }else if(card === "yellow"){
+        setCurrentCard({"colour": "yellow", "num": "any"})
+        toggleCurrentPlayer(currentPlayer, getNextPlayerIndex())
       } else if(card === "skipped"){
 
         resetSkipPlayer(currentPlayer, getNextPlayerIndex())

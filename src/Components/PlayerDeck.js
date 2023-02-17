@@ -9,6 +9,7 @@ export default function PlayerDeck(props) {
     const [currentPlayer, setCurrentPlayer] = useState(props.currentPlayer)
     const [isPlayer, setIsPlayer] = useState(props.current)
     const [isSkipped, setIsSkipped] = useState(props.skipped)
+    const [choosingColour, setChoosingColour] = useState(false)
 
     useEffect(() => {
       setBot(props.isBot)
@@ -55,8 +56,13 @@ export default function PlayerDeck(props) {
     function clickCard(card) {
       console.log(card)
       if (validateMove(card)){ // if the move is valid
-        props.playerPlayCard(card) // pass up to board to change current card
-        removeFromDeck(card) // remove it from the deck
+        if(card.changeColour === true){ // if card is +4 or wild
+          removeFromDeck(card) // remove it from the deck
+          colourChoose()
+        }else{
+          props.playerPlayCard(card) // pass up to board to change current card
+          removeFromDeck(card) // remove it from the deck
+        }
       } else{
         console.log("Not valid card")
       }
@@ -76,7 +82,6 @@ export default function PlayerDeck(props) {
       let validOwner = false // default values
 
       let currentPlayerIndex = props.currentPlayer
-      console.log(currentPlayerIndex)
 
       if(card.colour === currentCard.colour || card.num === currentCard.num || card.changeColour === true){ // if the card is of the same number, colour or a wild/plus4
         validCard = true // the actual card is legal to be played
@@ -136,6 +141,15 @@ export default function PlayerDeck(props) {
       }
     }
 
+    function colourChoose(){
+      setChoosingColour(true)
+    }
+
+    function colourChosen(colour){
+      props.playerPlayCard(colour)
+      setChoosingColour(false)
+    }
+
     useEffect(() => {
       if((isPlayer === true) && (isBot === true)){ // if the player is next and a bot
         if(isSkipped){
@@ -153,6 +167,8 @@ export default function PlayerDeck(props) {
       {cards.map((card) => {
         return <Card card={card} isBot={isBot} isPlayer={isPlayer} clickCard={clickCard} fromdeck={props.id}></Card>
       })}
+
+      { choosingColour && <div> <button onClick={() => colourChosen("red")}>RED</button> <button onClick={() => colourChosen("blue")}>BLUE</button> <button onClick={() => colourChosen("yellow")}>YELLOW</button> <button onClick={() => colourChosen("green")}>GREEN</button></div>}
     </div>
   )
 }
