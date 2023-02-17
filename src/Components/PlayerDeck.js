@@ -58,7 +58,7 @@ export default function PlayerDeck(props) {
       if (validateMove(card)){ // if the move is valid
         if(card.changeColour === true){ // if card is +4 or wild
           removeFromDeck(card) // remove it from the deck
-          colourChoose()
+          colourChoose() // inititate colour choose ui
         }else{
           props.playerPlayCard(card) // pass up to board to change current card
           removeFromDeck(card) // remove it from the deck
@@ -118,12 +118,12 @@ export default function PlayerDeck(props) {
 
     async function pickUp(plusNum = 1){
       if(isPlayer){
-        let newCards = [...cards]
+        let newCards = [...cards] // copy to not interfere with react states
         for (let i = 0 ; i < plusNum; i++){
           newCards.push(randomCard()) // add a new random card
         }
         setCards(newCards)
-        props.playerPlayCard("pickUp")
+        props.playerPlayCard("pickUp") // communicate to board that player picked up card
       } else{
         console.log("Not your turn!")
       }
