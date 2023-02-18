@@ -44,12 +44,16 @@ export default function PlayerDeck(props) {
         if(!confirmUno){
           pickUp(2)
         }
+        setConfirmUno(false)
       }
     }
 
     function checkUno(){
       if(cards.length === 1){
         setUno(true)
+        if(isBot){
+          botConfirmUno()
+        }
       } else{
         setUno(false)
       }
@@ -204,6 +208,12 @@ export default function PlayerDeck(props) {
       }
     }
     
+    function botConfirmUno(){
+      const randomNum = Math.random(1,10)
+      if(randomNum <= 9){
+        setConfirmUno(true)
+      }
+    }
 
     function colourChosen(colour){
       props.playerPlayCard(colour, choosingColour)
@@ -222,7 +232,8 @@ export default function PlayerDeck(props) {
 
   return (
     <div className='playerDeckContainer'>
-      { isPlayer ? <h2 className='activePlayer'>{props.id}</h2> : <h2>{props.id}</h2>} 
+      { Uno && <h2>UNO!</h2>} 
+      { isPlayer ? <h2 className='activePlayer'>{props.id}</h2> : <h2>{props.id}</h2>}
       <button onClick={()=> pickUp(1)}>Pick Up Card</button>
       {cards.map((card) => {
         return <Card card={card} isBot={isBot} isPlayer={isPlayer} clickCard={clickCard} fromdeck={props.id}></Card>
