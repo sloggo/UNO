@@ -57,8 +57,13 @@ export default function PlayerDeck(props) {
       console.log(card)
       if (validateMove(card)){ // if the move is valid
         if(card.changeColour === true){ // if card is +4 or wild
-          removeFromDeck(card) // remove it from the deck
-          colourChoose() // inititate colour choose ui
+          if(card.plusNum === 4){
+            removeFromDeck(card) // remove it from the deck
+            colourChoose("skip") // enable skip and initiate choose colour ui
+          } else{
+            removeFromDeck(card) // remove it from the deck
+            colourChoose() // inititate colour choose ui
+          }
         }else{
           props.playerPlayCard(card) // pass up to board to change current card
           removeFromDeck(card) // remove it from the deck
@@ -116,7 +121,7 @@ export default function PlayerDeck(props) {
       return validMoves
     }
 
-    async function pickUp(plusNum = 1){
+    async function pickUp(plusNum){
       if(isPlayer){
         let newCards = [...cards] // copy to not interfere with react states
         for (let i = 0 ; i < plusNum; i++){
@@ -141,8 +146,8 @@ export default function PlayerDeck(props) {
       }
     }
 
-    function colourChoose(){
-      setChoosingColour(true)
+    function colourChoose(skip = "noskip"){
+      setChoosingColour(skip)
       if(isBot){
         colourChosen(botChooseColour())
       }
@@ -170,7 +175,7 @@ export default function PlayerDeck(props) {
     
 
     function colourChosen(colour){
-      props.playerPlayCard(colour)
+      props.playerPlayCard(colour, choosingColour)
       setChoosingColour(false)
     }
 
@@ -187,7 +192,7 @@ export default function PlayerDeck(props) {
   return (
     <div className='playerDeckContainer'>
       { isPlayer ? <h2 className='activePlayer'>{props.id}</h2> : <h2>{props.id}</h2>} 
-      <button onClick={pickUp}>Pick Up Card</button>
+      <button onClick={()=> pickUp(1)}>Pick Up Card</button>
       {cards.map((card) => {
         return <Card card={card} isBot={isBot} isPlayer={isPlayer} clickCard={clickCard} fromdeck={props.id}></Card>
       })}

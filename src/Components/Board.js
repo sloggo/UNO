@@ -20,27 +20,43 @@ export default function Board(props) {
       resolve => setTimeout(resolve, ms)
     );
 
-    async function playerPlayCard(card){
+    async function playerPlayCard(card, skip){
       await delay(1000);
       if(card === "pickUp"){
         toggleCurrentPlayer(currentPlayer, getNextPlayerIndex())
       } else if(card.skip){
         setCurrentCard(card)
-
         toggleSkipPlayer(currentPlayer, getNextPlayerIndex()) // turn on skip for next player
 
       } else if(card === "red"){
         setCurrentCard({"colour": "red", "num": "any"})
-        toggleCurrentPlayer(currentPlayer, getNextPlayerIndex())
+        if(skip === "skip"){
+          toggleSkipPlayer(currentPlayer, getNextPlayerIndex()) // turn on skip for next player
+        } else{
+          toggleCurrentPlayer(currentPlayer, getNextPlayerIndex())
+        }
       }else if(card === "blue"){
         setCurrentCard({"colour": "blue", "num": "any"})
-        toggleCurrentPlayer(currentPlayer, getNextPlayerIndex())
+        if(skip === "skip"){
+          toggleSkipPlayer(currentPlayer, getNextPlayerIndex()) // turn on skip for next player
+        } else{
+          toggleCurrentPlayer(currentPlayer, getNextPlayerIndex())
+        }
       }else if(card === "green"){
         setCurrentCard({"colour": "green", "num": "any"})
-        toggleCurrentPlayer(currentPlayer, getNextPlayerIndex())
+        if(skip === "skip"){
+          toggleSkipPlayer(currentPlayer, getNextPlayerIndex()) // turn on skip for next player
+        } else{
+          toggleCurrentPlayer(currentPlayer, getNextPlayerIndex())
+        }
       }else if(card === "yellow"){
         setCurrentCard({"colour": "yellow", "num": "any"})
-        toggleCurrentPlayer(currentPlayer, getNextPlayerIndex())
+        
+        if(skip === "skip"){
+          toggleSkipPlayer(currentPlayer, getNextPlayerIndex()) // turn on skip for next player
+        } else{
+          toggleCurrentPlayer(currentPlayer, getNextPlayerIndex())
+        }
       } else if(card === "skipped"){
 
         resetSkipPlayer(currentPlayer, getNextPlayerIndex())
@@ -66,8 +82,6 @@ export default function Board(props) {
 
       console.log("updated players",newPlayers)
 
-      console.log(newPlayers)
-
       setPlayers(newPlayers)
       setCurrentPlayer(nxtPly)
     }
@@ -87,8 +101,6 @@ export default function Board(props) {
 
       console.log("updated players",newPlayers)
 
-      console.log(newPlayers)
-
       setPlayers(newPlayers)
       setCurrentPlayer(nxtPly)
     }
@@ -106,8 +118,6 @@ export default function Board(props) {
       newPlayers.splice(nxtPly, 1, nxtPlayerEdit)
 
       console.log("updated players",newPlayers)
-
-      console.log(newPlayers)
 
       setPlayers(newPlayers)
       setCurrentPlayer(nxtPly)
