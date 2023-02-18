@@ -11,6 +11,7 @@ export default function Board(props) {
     {"player": 2, "skipped": false , "isBot": true, "current": false},
     {"player": 3, "skipped": false , "isBot": true, "current": false}])
     const [currentPlayer , setCurrentPlayer] = useState(0)
+    const [reversed, setReversed] = useState(false)
 
     useEffect(() =>{
       console.log(players)
@@ -63,6 +64,9 @@ export default function Board(props) {
       } else if(card === "skipped"){
 
         resetSkipPlayer(currentPlayer, getNextPlayerIndex())
+      }else if(card.type === "reverse"){
+        setCurrentCard(card)
+        toggleReverse()
       }else{
         setCurrentCard(card)
 
@@ -127,14 +131,30 @@ export default function Board(props) {
     }
 
     function getNextPlayerIndex(){
-      const currentIndex = currentPlayer
-      let nextIndex = currentIndex + 1
+      if(reversed === false){
+        const currentIndex = currentPlayer
+        let nextIndex = currentIndex + 1
 
-      if(players.length < nextIndex+1){
-        nextIndex = 0
+        if(players.length < nextIndex+1){
+          nextIndex = 0
+        }
+
+        return nextIndex
+      } else if(reversed === true){
+        const currentIndex = currentPlayer
+        let nextIndex = currentIndex - 1
+
+        if(nextIndex < 0){
+          nextIndex = 3
+        }
+
+        return nextIndex
       }
+    }
 
-      return nextIndex
+    function toggleReverse(){
+      let current = reversed
+      setReversed(!current, toggleCurrentPlayer(currentPlayer, getNextPlayerIndex()))
     }
 
   return (
