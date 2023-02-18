@@ -11,6 +11,7 @@ export default function PlayerDeck(props) {
     const [isSkipped, setIsSkipped] = useState(props.skipped)
     const [choosingColour, setChoosingColour] = useState(false)
     const [Uno, setUno] = useState(false)
+    const [confirmUno, setConfirmUno] = useState(false)
 
     useEffect(() => {
       setBot(props.isBot)
@@ -29,14 +30,33 @@ export default function PlayerDeck(props) {
       checkUno()
     }, [cards])
 
+    useEffect(() => {
+      unoTimer()
+    }, [Uno])
+
     const delay = ms => new Promise(
       resolve => setTimeout(resolve, ms)
     );
 
+    async function unoTimer(){
+      if(Uno === true){
+        await delay(5000)
+        if(!confirmUno){
+          pickUp(2)
+        }
+      }
+    }
+
     function checkUno(){
       if(cards.length === 1){
         setUno(true)
+      } else{
+        setUno(false)
       }
+    }
+
+    function confirmUnoClick(){
+      setConfirmUno(true)
     }
 
     function playerSkipped(){
@@ -133,7 +153,7 @@ export default function PlayerDeck(props) {
     }
 
     async function pickUp(plusNum){
-      if(isPlayer){
+      if(isPlayer || Uno){
         let newCards = [...cards] // copy to not interfere with react states
         for (let i = 0 ; i < plusNum; i++){
           newCards.push(randomCard()) // add a new random card
@@ -209,7 +229,7 @@ export default function PlayerDeck(props) {
       })}
 
       { choosingColour && <div> <button onClick={() => colourChosen("red")}>RED</button> <button onClick={() => colourChosen("blue")}>BLUE</button> <button onClick={() => colourChosen("yellow")}>YELLOW</button> <button onClick={() => colourChosen("green")}>GREEN</button></div>}
-      { Uno && <button>UNO!</button>}
+      { !confirmUno && !isBot && Uno && <button onClick={confirmUnoClick}>UNO!</button>}
     </div>
   )
 }
