@@ -10,6 +10,7 @@ export default function PlayerDeck(props) {
     const [isPlayer, setIsPlayer] = useState(props.current)
     const [isSkipped, setIsSkipped] = useState(props.skipped)
     const [choosingColour, setChoosingColour] = useState(false)
+    const [Uno, setUno] = useState(false)
 
     useEffect(() => {
       setBot(props.isBot)
@@ -24,9 +25,19 @@ export default function PlayerDeck(props) {
       }
     }, [isSkipped])
 
+    useEffect(() => {
+      checkUno()
+    }, [cards])
+
     const delay = ms => new Promise(
       resolve => setTimeout(resolve, ms)
     );
+
+    function checkUno(){
+      if(cards.length === 1){
+        setUno(true)
+      }
+    }
 
     function playerSkipped(){
         if(props.currentCard.plusNum){ // if the card just played has a plus attribute
@@ -198,6 +209,7 @@ export default function PlayerDeck(props) {
       })}
 
       { choosingColour && <div> <button onClick={() => colourChosen("red")}>RED</button> <button onClick={() => colourChosen("blue")}>BLUE</button> <button onClick={() => colourChosen("yellow")}>YELLOW</button> <button onClick={() => colourChosen("green")}>GREEN</button></div>}
+      { Uno && <button>UNO!</button>}
     </div>
   )
 }
