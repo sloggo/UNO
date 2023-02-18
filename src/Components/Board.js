@@ -29,32 +29,35 @@ export default function Board(props) {
         toggleSkipPlayer(currentPlayer, getNextPlayerIndex()) // turn on skip for next player
 
       } else if(card === "red"){
-        setCurrentCard({"colour": "red", "num": "any"})
         if(skip === "skip"){
+          setCurrentCard({"colour": "red", "num": "any", "plusNum":4}) // to allow next player to pick up 4
           toggleSkipPlayer(currentPlayer, getNextPlayerIndex()) // turn on skip for next player
         } else{
+          setCurrentCard({"colour": "red", "num": "any"})
           toggleCurrentPlayer(currentPlayer, getNextPlayerIndex())
         }
       }else if(card === "blue"){
-        setCurrentCard({"colour": "blue", "num": "any"})
         if(skip === "skip"){
+          setCurrentCard({"colour": "blue", "num": "any", "plusNum":4})
           toggleSkipPlayer(currentPlayer, getNextPlayerIndex()) // turn on skip for next player
         } else{
+          setCurrentCard({"colour": "blue", "num": "any"})
           toggleCurrentPlayer(currentPlayer, getNextPlayerIndex())
         }
       }else if(card === "green"){
-        setCurrentCard({"colour": "green", "num": "any"})
         if(skip === "skip"){
+          setCurrentCard({"colour": "green", "num": "any", "plusNum":4})
           toggleSkipPlayer(currentPlayer, getNextPlayerIndex()) // turn on skip for next player
         } else{
+          setCurrentCard({"colour": "green", "num": "any"})
           toggleCurrentPlayer(currentPlayer, getNextPlayerIndex())
         }
       }else if(card === "yellow"){
-        setCurrentCard({"colour": "yellow", "num": "any"})
-        
         if(skip === "skip"){
+          setCurrentCard({"colour": "yellow", "num": "any", "plusNum":4})
           toggleSkipPlayer(currentPlayer, getNextPlayerIndex()) // turn on skip for next player
         } else{
+          setCurrentCard({"colour": "yellow", "num": "any"})
           toggleCurrentPlayer(currentPlayer, getNextPlayerIndex())
         }
       } else if(card === "skipped"){
