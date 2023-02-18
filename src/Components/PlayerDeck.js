@@ -139,7 +139,7 @@ export default function PlayerDeck(props) {
       let movePool = getValidMoves()
 
       if(movePool.length <= 0){
-        pickUp() // if no valid pick up
+        pickUp(1) // if no valid pick up
       } else{
         const chosenCard = movePool[Math.floor(Math.random()*movePool.length)] // choose randomly from pool of legal moves
         clickCard(chosenCard)
