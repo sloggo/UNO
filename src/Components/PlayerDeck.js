@@ -28,6 +28,7 @@ export default function PlayerDeck(props) {
 
     useEffect(() => {
       checkUno()
+      checkWin()
     }, [cards])
 
     useEffect(() => {
@@ -37,6 +38,12 @@ export default function PlayerDeck(props) {
     const delay = ms => new Promise(
       resolve => setTimeout(resolve, ms)
     );
+
+    function checkWin(){
+      if(cards.length === 0){
+        props.confirmWin(props.id)
+      }
+    }
 
     async function unoTimer(){
       if(Uno === true){
@@ -234,10 +241,12 @@ export default function PlayerDeck(props) {
     <div className='playerDeckContainer'>
       { Uno && <h2>UNO!</h2>} 
       { isPlayer ? <h2 className='activePlayer'>{props.id}</h2> : <h2>{props.id}</h2>}
-      <button onClick={()=> pickUp(1)}>Pick Up Card</button>
-      {cards.map((card) => {
-        return <Card card={card} isBot={isBot} isPlayer={isPlayer} clickCard={clickCard} fromdeck={props.id}></Card>
-      })}
+      <div className='player-deck'>
+        { !isBot && <img src="Images/backside.png" width={70} onClick={()=> pickUp(1)}></img>}
+        {cards.map((card) => {
+          return <Card card={card} isBot={isBot} isPlayer={isPlayer} clickCard={clickCard} fromdeck={props.id}></Card>
+        })}
+      </div>
 
       { choosingColour && <div> <button onClick={() => colourChosen("red")}>RED</button> <button onClick={() => colourChosen("blue")}>BLUE</button> <button onClick={() => colourChosen("yellow")}>YELLOW</button> <button onClick={() => colourChosen("green")}>GREEN</button></div>}
       { !confirmUno && !isBot && Uno && <button onClick={confirmUnoClick}>UNO!</button>}

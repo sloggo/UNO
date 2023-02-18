@@ -28,3 +28,14 @@ p{
 h2.activePlayer{
     color: blue;
 }
+
+.player-deck{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.playerDeckContainer h2{
+    text-align: center
+}

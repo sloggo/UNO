@@ -13,9 +13,7 @@ export default function Card(props) {
 
   return (
     <>
-        {<p key={props.card.number} card={props.card} colour={props.card.colour} onClick={cardHandleClick} fromdeck={props.from}>
-            {props.card.colour} {props.card.type} {props.card.num} {props.card.plusNum}
-        </p>}
+        { !props.isBot ? <img src={card.image} width={70} onClick={cardHandleClick}></img> : <img src={"Images/backside.png"} width={70}></img> }
     </>
   )
 }
