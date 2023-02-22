@@ -1,4 +1,11 @@
 .barChartDiv{
+    margin: 30px;
     height: 60vh;
-    width: 50vw;
+    width: 30vw;
+}
+
+.dataDiv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
