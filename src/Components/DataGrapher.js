@@ -51,21 +51,18 @@ export default function DataGrapher(props) {
 
         coloursLog.forEach(card => {
             if(card.colour === "red"){
-                red = red+1
+                red++
             } else if(card.colour === "blue"){
-                blue = blue+1
+                blue++
             } else if(card.colour === "yellow"){
-                yellow = yellow+1
+                yellow++
             } else if(card.colour === "green"){
-                green = green+1
+                green++
             }
         })
         
         let noColours = []
-        noColours.push(red)
-        noColours.push(blue)
-        noColours.push(yellow)
-        noColours.push(green)
+        noColours.push(red,blue,yellow,green)
 
         setColoursData([...noColours])
     }
@@ -84,32 +81,32 @@ export default function DataGrapher(props) {
 
         numbersLog.forEach(card => {
             if(card.num === 1){
-                one = one+1
+                one++
             } else if(card.num === 2){
-                two = two+1
+                two++
             } else if(card.num === 3){
-                three = three+1
+                three++
             } else if(card.num === 4){
-                four = four+1
+                four++
             } else if(card.num === 5){
-                five = five+1
+                five++
             } else if(card.num === 6){
-                six = six+1
+                six++
             } else if(card.num === 7){
-                seven = seven+1
+                seven++
             } else if(card.num === 8){
-                eight = eight+1
+                eight++
             } else if(card.num === 9){
-                nine = nine+1
+                nine++
             } else if(card.num === 0){
-                zero = zero+1
+                zero++
             }
         })
         
         let noNums = []
         noNums.push(one, two, three, four, five, six, seven, eight, nine, zero)
 
-        setColoursData([...noNums])
+        setNumbersData([...noNums])
     }
 
     useEffect(() => {
@@ -171,18 +168,12 @@ export default function DataGrapher(props) {
                     labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
                     datasets: [{
                     label: 'Frequency of Numbers',
-                    data: coloursData,
+                    data: numbersData,
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(255, 205, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(255, 99, 132, 0.2)'
                     ],
                     borderColor: [
                         'rgb(255, 99, 132)',
-                        'rgb(255, 159, 64)',
-                        'rgb(255, 205, 86)',
-                        'rgb(75, 192, 192)',
                     ],
                     borderWidth: 1
                     }] 
