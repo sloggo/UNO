@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 import "./Board.css"
 import unoDeck from "./deck.json";
 import PlayerDeck from './PlayerDeck'; 
+import json2csv from "json2csv";
 
 export default function Board(props) {
     const [playing, setPlaying] = useState(true)
     const [deck, setDeck] = useState(unoDeck)
     const [currentCard, setCurrentCard] = useState(deck[Math.floor(Math.random()*deck.length)])
+    const [log, setLog] = useState(currentCard)
     const [players, setPlayers] = useState([{"player": 0, "skipped": false , "isBot": false, "current": true},
     {"player": 1, "skipped": false , "isBot": true, "current": false},
     {"player": 2, "skipped": false , "isBot": true, "current": false},
@@ -71,6 +73,7 @@ export default function Board(props) {
 
           toggleCurrentPlayer(currentPlayer, getNextPlayerIndex()) // current = false on last current player 
         }
+        logCard(card)
       }
     }
 
@@ -160,6 +163,20 @@ export default function Board(props) {
     function confirmWin(winner){
       setPlaying(false)
       setWinner(winner)
+    }
+
+    function logCard(card){
+      let newLog = [...log]
+      newLog.push(card)
+      setLog(newLog)
+
+      json2csv({data: newLog, fields: ['num', 'colour']}, function(err, csv) {
+        if (err) console.log(err);
+        fs.writeFile('numplayedcards.csv', csv, function(err) {
+          if (err) throw err;
+          console.log('numplayedcards file saved');
+        });
+      });
     }
 
   return (
