@@ -245,7 +245,7 @@ export default function PlayerDeck(props) {
       <div className='player-deck'>
         { !isBot && <img src="Images/backside.png" width={70} onClick={()=> pickUp(1)}></img>}
         {cards.map((card) => {
-          return <Card card={card} isBot={isBot} isPlayer={isPlayer} clickCard={clickCard} fromdeck={props.id}></Card>
+          return <Card mode={props.mode} card={card} isBot={isBot} isPlayer={isPlayer} clickCard={clickCard} fromdeck={props.id}></Card>
         })}
       </div>
 

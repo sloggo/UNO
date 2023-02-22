@@ -14,6 +14,8 @@ export default function Board(props) {
     const [reversed, setReversed] = useState(false)
     const [winner, setWinner] = useState(null)
     const [mode, setMode] = useState(props.mode)
+    const [numGames, setNumGames] = useState(props.numGames)
+    const [gameNum, setGameNum] = useState(1)
 
     const delay = ms => new Promise(
       resolve => setTimeout(resolve, ms)
@@ -21,6 +23,7 @@ export default function Board(props) {
 
     useEffect(() =>{
       setMode(props.mode)
+      setNumGames(props.numGames)
     }, [props])
 
     function reinitialiseGame(resetStats = false){
@@ -42,7 +45,11 @@ export default function Board(props) {
 
       for(let i=0; i < numPlayers; i++){
         if(i === 0){
-          newPlayers.push({"player": i, "skipped": false , "isBot": false, "current": true, "name": playerName})
+          if(!(props.mode === "sim")){
+            newPlayers.push({"player": i, "skipped": false , "isBot": false, "current": true, "name": playerName})
+          } else{
+            newPlayers.push({"player": i, "skipped": false , "isBot": true, "current": true, "name": "Bot".concat(i)})
+          }
         } else{
           newPlayers.push({"player": i, "skipped": false , "isBot": true, "current": false, "name": "Bot".concat(i)})
         }
@@ -55,7 +62,7 @@ export default function Board(props) {
     async function playerPlayCard(card, skip){
       if(playing){
         logCard(card)
-        await delay(1000);
+        !(mode === "sim") ? await delay(1000) : await delay(1) ;
         if(card === "pickUp"){
           toggleCurrentPlayer(currentPlayer, getNextPlayerIndex())
         } else if(card.skip){
@@ -210,7 +217,7 @@ export default function Board(props) {
           { !playing && <h1>{winner} Wins!</h1>}
           <div className='playerDecks'>
             {playing && players.map((player) => {
-              return <PlayerDeck name={player.name}confirmWin={confirmWin} currentPlayer={currentPlayer} skipped={player.skipped} deck={deck} key={player.player} id={player.player} currentCard={currentCard} current={player.current} isBot={player.isBot} playerPlayCard={playerPlayCard}></PlayerDeck>
+              return <PlayerDeck mode={mode} name={player.name}confirmWin={confirmWin} currentPlayer={currentPlayer} skipped={player.skipped} deck={deck} key={player.player} id={player.player} currentCard={currentCard} current={player.current} isBot={player.isBot} playerPlayCard={playerPlayCard}></PlayerDeck>
             })}
           </div>
         </div>

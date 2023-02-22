@@ -6,6 +6,7 @@ export default function Menu() {
     const [currentTab, setCurrentTab] = useState("main")
     const [playerName, setPlayerName] = useState("Player")
     const [numPlayer, setNumPlayer] = useState(4)
+    const [numGames, setNumGames] = useState(1)
     const [playing, setPlaying] = useState(false)
 
     function selectSinglePlayer(){
@@ -30,6 +31,10 @@ export default function Menu() {
 
     function updateNumPlayer(event){
         setNumPlayer(event.target.value)
+    }
+
+    function updateNumGames(event){
+        setNumGames(event.target.value)
     }
 
     function beginSinglePlayer(){
@@ -76,7 +81,12 @@ export default function Menu() {
 
         {currentTab === "sim" && <div className="main">
             <h2>Simulation Mode</h2>
+            <input type="number" placeholder="No. Players" max="8" min="2" onChange={updateNumPlayer}></input>
+            <input type="number" placeholder="No. Games" max="50" min="1" onChange={updateNumGames}></input>
             <div className="menuButtonsDiv">
+                <div className="menuButton" onClick={beginSinglePlayer}>
+                    Begin
+                </div>
 
                 <div className="menuButton" onClick={selectMain}>
                     Back
@@ -94,7 +104,7 @@ export default function Menu() {
             </div>
         </div>}
     </div>}
-    {playing && <Board playerName={playerName} mode={currentTab} numPlayer={numPlayer} playing={playing}></Board>}
+    {playing && <Board numGames={numGames} playerName={playerName} mode={currentTab} numPlayer={numPlayer} playing={playing}></Board>}
     </>
   )
 }

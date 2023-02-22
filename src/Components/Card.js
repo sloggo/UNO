@@ -13,7 +13,7 @@ export default function Card(props) {
 
   return (
     <>
-        { !props.isBot ? <img src={card.image} width={70} onClick={cardHandleClick}></img> : <img src={"Images/backside.png"} width={70}></img> }
+        { !props.isBot || (props.mode === "sim") ? <img src={card.image} width={70} onClick={cardHandleClick}></img> : <img src={"Images/backside.png"} width={70}></img> }
     </>
   )
 }
