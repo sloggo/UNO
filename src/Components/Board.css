@@ -1,5 +1,12 @@
+.boardDivContents{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .boardDiv{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -15,4 +22,15 @@
 .current-card{
     justify-content: center;
     align-self: center;
+}
+
+.gameDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5vw;
+}
+
+.current-go{
+    font-size: 30px;
 }

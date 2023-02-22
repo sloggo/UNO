@@ -172,19 +172,24 @@ export default function Board(props) {
     }
 
   return (
-    <>
-      <div className='boardDiv'>{props.noPlayers} Players</div>
-      { playing && <h2>Current Go: {currentPlayer}</h2>}
-      { !playing && <h1>{winner} Wins!</h1>}
-      <div className='playerDecks'>
-        {playing && players.map((player) => {
-          return <PlayerDeck confirmWin={confirmWin} currentPlayer={currentPlayer} skipped={player.skipped} deck={deck} key={player.player} id={player.player} currentCard={currentCard} current={player.current} isBot={player.isBot} playerPlayCard={playerPlayCard}></PlayerDeck>
-        })}
+    <div className='gameDiv'>
+      <div className='boardDiv'>
+        { playing && <h2 className='current-go'>It's your go: {currentPlayer}!</h2>}
+        <div className='boardDivContents'>
+          { !playing && <h1>{winner} Wins!</h1>}
+          <div className='playerDecks'>
+            {playing && players.map((player) => {
+              return <PlayerDeck confirmWin={confirmWin} currentPlayer={currentPlayer} skipped={player.skipped} deck={deck} key={player.player} id={player.player} currentCard={currentCard} current={player.current} isBot={player.isBot} playerPlayCard={playerPlayCard}></PlayerDeck>
+            })}
+          </div>
+        </div>
+        
+        <div className='current-card-div'>
+          { playing && <img className="current-card" src={currentCard.image} width={100}></img>}
+        </div>
       </div>
-      <div className='current-card-div'>
-        { playing && <img className="current-card" src={currentCard.image} width={100}></img>}
-      </div>
+      
       <DataGrapher log={log}></DataGrapher>
-    </>
+    </div>
   )
 }

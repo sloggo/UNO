@@ -27,6 +27,7 @@ p{
 
 h2.activePlayer{
     color: blue;
+    font-size: 30px;
 }
 
 .player-deck{

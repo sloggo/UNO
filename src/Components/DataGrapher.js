@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Bar, Chart } from 'react-chartjs-2'
+import { Bar, Chart, Doughnut } from 'react-chartjs-2'
 import { Chart as ChartJS } from 'chart.js/auto'
 import "../Components/DataGrapher.css"
 
@@ -128,7 +128,7 @@ export default function DataGrapher(props) {
   return (
     <div className='dataDiv'>
         <div className='barChartDiv'>
-            <Bar
+            <Doughnut
                 data={{
                     labels: ["Red", "Blue", "Yellow", "Green"],
                     datasets: [{
