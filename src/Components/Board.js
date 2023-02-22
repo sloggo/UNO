@@ -9,7 +9,7 @@ export default function Board(props) {
     const [deck, setDeck] = useState(unoDeck)
     const [currentCard, setCurrentCard] = useState(deck[Math.floor(Math.random()*deck.length)])
     const [log, setLog] = useState([currentCard])
-    const [players, setPlayers] = useState([{"player": 0, "skipped": false , "isBot": false, "current": true},
+    const [players, setPlayers] = useState([{"player": 0, "skipped": false , "isBot": true, "current": true},
     {"player": 1, "skipped": false , "isBot": true, "current": false},
     {"player": 2, "skipped": false , "isBot": true, "current": false},
     {"player": 3, "skipped": false , "isBot": true, "current": false}])
