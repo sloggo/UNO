@@ -14,8 +14,11 @@ export default function Board(props) {
     const [reversed, setReversed] = useState(false)
     const [winner, setWinner] = useState(null)
     const [mode, setMode] = useState(props.mode)
+    const [startCards, setStartCards] = useState(props.startCards)
     const [numGames, setNumGames] = useState(props.numGames)
     const [gameNum, setGameNum] = useState(1)
+    const [winners, setWinners] = useState([])
+    const [finishedGame, setFinishedGame] = useState(false)
 
     const delay = ms => new Promise(
       resolve => setTimeout(resolve, ms)
@@ -24,6 +27,7 @@ export default function Board(props) {
     useEffect(() =>{
       setMode(props.mode)
       setNumGames(props.numGames)
+      setStartCards(props.startCards)
     }, [props])
 
     function reinitialiseGame(resetStats = false){
@@ -198,9 +202,23 @@ export default function Board(props) {
       setReversed(!current, toggleCurrentPlayer(currentPlayer, getNextPlayerIndex()))
     }
 
-    function confirmWin(winner){
+    async function confirmWin(winner){
+      let oldgameNum = gameNum
+      console.log(oldgameNum++)
+      setGameNum(oldgameNum++)
       setPlaying(false)
       setWinner(winner)
+
+      let oldWinners = [...winners]
+      oldWinners.push(winner)
+      setWinners(oldWinners)
+
+      if(gameNum < numGames){
+        await delay(500)
+        reinitialiseGame()
+      } else{
+        setFinishedGame(true)
+      }
     }
 
     function logCard(card){
@@ -212,12 +230,15 @@ export default function Board(props) {
   return (
     <div className='gameDiv'>
       <div className='boardDiv'>
+        { playing && <h1>Game {gameNum}</h1>}
+        { !playing && <h1>Game {gameNum -1} finished!</h1>}
         { playing && <h2 className='current-go'>It's your go: {players.find(player => player.player === currentPlayer).name}!</h2>}
         <div className='boardDivContents'>
           { !playing && <h1>{winner} Wins!</h1>}
+          { finishedGame && <button onClick={props.finishedGame}>Back to menu</button>}
           <div className='playerDecks'>
             {playing && players.map((player) => {
-              return <PlayerDeck mode={mode} name={player.name}confirmWin={confirmWin} currentPlayer={currentPlayer} skipped={player.skipped} deck={deck} key={player.player} id={player.player} currentCard={currentCard} current={player.current} isBot={player.isBot} playerPlayCard={playerPlayCard}></PlayerDeck>
+              return <PlayerDeck startCards={props.startCards} mode={mode} name={player.name}confirmWin={confirmWin} currentPlayer={currentPlayer} skipped={player.skipped} deck={deck} key={player.player} id={player.player} currentCard={currentCard} current={player.current} isBot={player.isBot} playerPlayCard={playerPlayCard}></PlayerDeck>
             })}
           </div>
         </div>
@@ -227,7 +248,7 @@ export default function Board(props) {
         </div>
       </div>
       
-      <DataGrapher log={log}></DataGrapher>
+      <DataGrapher log={log} winners={winners} players={players}></DataGrapher>
     </div>
   )
 }

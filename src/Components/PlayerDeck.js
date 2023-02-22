@@ -90,7 +90,7 @@ export default function PlayerDeck(props) {
     function initiateCards() {
         let newCards = []
 
-        for (let i = 0; i < 9; i++) { // cycles 9 times
+        for (let i = 0; i < props.startCards; i++) { // cycles as many times as startcards is set
             newCards.push(randomCard())
           }
         return newCards

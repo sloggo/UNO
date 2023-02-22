@@ -7,6 +7,7 @@ export default function Menu() {
     const [playerName, setPlayerName] = useState("Player")
     const [numPlayer, setNumPlayer] = useState(4)
     const [numGames, setNumGames] = useState(1)
+    const [startCards, setStartCards] = useState(9)
     const [playing, setPlaying] = useState(false)
 
     function selectSinglePlayer(){
@@ -39,6 +40,19 @@ export default function Menu() {
 
     function beginSinglePlayer(){
         setPlaying(true)
+    }
+
+    function updateNumCards(event){
+        setStartCards(event.target.value)
+    }
+
+    function finishedGame(){
+        setPlaying(false)
+        setPlayerName("Player")
+        setNumGames(1)
+        setNumPlayer(4)
+        setCurrentTab("main")
+        setStartCards(9)
     }
 
   return (
@@ -81,8 +95,11 @@ export default function Menu() {
 
         {currentTab === "sim" && <div className="main">
             <h2>Simulation Mode</h2>
+            <p>Test hypotheses by tweaking these values!</p>
             <input type="number" placeholder="No. Players" max="8" min="2" onChange={updateNumPlayer}></input>
             <input type="number" placeholder="No. Games" max="50" min="1" onChange={updateNumGames}></input>
+            <input type="number" placeholder="No. Starting Cards" max="20" min="3" onChange={updateNumCards}></input>
+
             <div className="menuButtonsDiv">
                 <div className="menuButton" onClick={beginSinglePlayer}>
                     Begin
@@ -104,7 +121,7 @@ export default function Menu() {
             </div>
         </div>}
     </div>}
-    {playing && <Board numGames={numGames} playerName={playerName} mode={currentTab} numPlayer={numPlayer} playing={playing}></Board>}
+    {playing && <Board startCards={startCards} finishedGame={finishedGame} numGames={numGames} playerName={playerName} mode={currentTab} numPlayer={numPlayer} playing={playing}></Board>}
     </>
   )
 }

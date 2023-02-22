@@ -6,10 +6,15 @@ import "../Components/DataGrapher.css"
 
 export default function DataGrapher(props) {
     const [log, setLog] = useState([...props.log])
+    const [winners, setWinners] = useState(props.winners)
+    const [players, setPlayers] = useState(props.players)
     const [coloursLog, setColoursLog] = useState()
     const [numbersLog, setNumbersLog] = useState()
     const [coloursData, setColoursData] = useState()
     const [numbersData, setNumbersData] = useState()
+    const [winningData, setWinningData] = useState()
+    const [playerLabels, setPlayerLabels] = useState()
+    const [playerWins, setPlayerWins] = useState()
 
     function formatLogToNumberOfColours(){
         const colouredLog = log.filter(card => card.colour || (card === "red" || card === "blue" || card === "yellow" || card === "green"));
@@ -109,10 +114,28 @@ export default function DataGrapher(props) {
         setNumbersData([...noNums])
     }
 
+    function formatWinnersData(){
+        let newWinningData = players.map(player => {
+            let noWins = winners.filter(win => win === player.player).length
+            let playerData = {position: player.player+1, noWins: noWins}
+            return playerData
+        })
+
+        setWinningData(newWinningData)
+    }
+
+    function seperateWinningData(){
+        setPlayerLabels(winningData.map(player => String(player.position)))
+        setPlayerWins(winningData.map(player => player.noWins))
+    }
+
     useEffect(() => {
         setLog(props.log)
+        setWinners(props.winners)
+        setPlayers(props.players)
         formatLogToNumberOfColours()
         formatLogToNumberOfNumbers()
+        formatWinnersData()
     }, [props])
 
     useEffect(() => {
@@ -122,6 +145,10 @@ export default function DataGrapher(props) {
 
         if(numbersLog){
             formatNoNumbersData()
+        }
+
+        if(winningData){
+            seperateWinningData()
         }
     }, [coloursLog, numbersLog])
 
@@ -187,6 +214,64 @@ export default function DataGrapher(props) {
                             fontSize: 25,
                         },
                     },
+                    scales: {
+                        y: {
+                          title: {
+                            display: true,
+                            text: 'Frequency'
+                          }
+                        },
+                        x: {
+                            title: {
+                              display: true,
+                              text: 'Number on Card'
+                            }
+                          }
+                      }   
+                }}
+            />
+        </div>
+        
+        <div className='barChartDiv'>
+            <Bar
+                data={{
+                    labels: playerLabels,
+                    datasets: [{
+                    label: 'Frequency of Wins',
+                    data: playerWins,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 99, 132, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgb(255, 99, 132)',
+                    ],
+                    borderWidth: 1
+                    }] 
+                }}
+                height={500}
+                width={500}
+                options={{
+                    maintainAspectRatio: false,
+                    legend: {
+                        labels: {
+                            fontSize: 25,
+                        },
+                    },
+                    scales: {
+                        y: {
+                          title: {
+                            display: true,
+                            text: 'Number of Wins'
+                          }
+                        },
+                        x: {
+                            title: {
+                              display: true,
+                              text: 'Player Position'
+                            }
+                          }
+                      }     
                 }}
             />
         </div>
