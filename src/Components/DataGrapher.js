@@ -197,10 +197,28 @@ export default function DataGrapher(props) {
                     label: 'Frequency of Numbers',
                     data: numbersData,
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)'
+                        'rgba(247, 37, 133, 0.2)',
+                        'rgba(181, 23, 158, 0.2)',
+                        'rgba(114, 9, 183, 0.2)',
+                        'rgba(86, 11, 173, 0.2)',
+                        'rgba(72, 12, 168, 0.2)',
+                        'rgba(58, 12, 163, 0.2)',
+                        'rgba(63, 55, 201, 0.2)',
+                        'rgba(67, 97, 238, 0.2)',
+                        'rgba(72, 149, 239, 0.2)',
+                        'rgba(76, 201, 240, 0.2)',
                     ],
                     borderColor: [
-                        'rgb(255, 99, 132)',
+                        'rgb(247, 37, 133)',
+                        'rgb(181, 23, 158)',
+                        'rgb(114, 9, 183)',
+                        'rgb(86, 11, 173)',
+                        'rgb(72, 12, 168)',
+                        'rgb(58, 12, 163)',
+                        'rgb(63, 55, 201)',
+                        'rgb(67, 97, 238)',
+                        'rgb(72, 149, 239)',
+                        'rgb(76, 201, 240)',
                     ],
                     borderWidth: 1
                     }] 
@@ -240,11 +258,19 @@ export default function DataGrapher(props) {
                     label: 'Frequency of Wins',
                     data: playerWins,
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(255, 99, 132, 0.2)'
+                        'rgba(0, 129, 167, 0.2)',
+                        'rgba(0, 175, 185, 0.2)',
+                        'rgba(132, 165, 157, 0.2)',
+                        'rgba(246, 189, 96, 0.2)',
+                        'rgba(240, 113, 103, 0.2)',
+                        
                     ],
                     borderColor: [
-                        'rgb(255, 99, 132)',
+                        'rgb(0, 129, 167)',
+                        'rgb(0, 175, 185)',
+                        'rgb(132, 165, 157)',
+                        'rgb(246, 189, 96)',
+                        'rgb(240, 113, 103)',
                     ],
                     borderWidth: 1
                     }] 
