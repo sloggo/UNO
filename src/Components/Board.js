@@ -30,7 +30,7 @@ export default function Board(props) {
       setStartCards(props.startCards)
     }, [props])
 
-    function reinitialiseGame(resetStats = false){
+    function reinitialiseGame(resetStats = false){ //  set all states back to default
       setPlaying(true)
       setCurrentCard(deck[Math.floor(Math.random()*deck.length)])
       setPlayers(setPlayersArray())
@@ -119,7 +119,7 @@ export default function Board(props) {
       }
     }
 
-    function toggleSkipPlayer(curPly, nxtPly){
+    function toggleSkipPlayer(curPly, nxtPly){ // make copy of state, edit then resubmit state
       let curPlayerEdit = {...players[curPly]}
       let nxtPlayerEdit = {...players[nxtPly]}
 
@@ -138,7 +138,7 @@ export default function Board(props) {
       setCurrentPlayer(nxtPly)
     }
 
-    function resetSkipPlayer(curPly, nxtPly){
+    function resetSkipPlayer(curPly, nxtPly){ // make copy of state, edit then resubmit state
       let curPlayerEdit = {...players[curPly]}
       let nxtPlayerEdit = {...players[nxtPly]}
 
@@ -157,14 +157,14 @@ export default function Board(props) {
       setCurrentPlayer(nxtPly)
     }
 
-    function toggleCurrentPlayer(curPly, nxtPly){
+    function toggleCurrentPlayer(curPly, nxtPly){ // make copy of state, edit then resubmit state
       let curPlayerEdit = {...players[curPly]}
       let nxtPlayerEdit = {...players[nxtPly]}
 
       let newPlayers = [...players]
 
       curPlayerEdit.current = false
-      newPlayers.splice(curPly, 1, curPlayerEdit)
+      newPlayers.splice(curPly, 1, curPlayerEdit) 
 
       nxtPlayerEdit.current = true
       newPlayers.splice(nxtPly, 1, nxtPlayerEdit)
@@ -175,7 +175,7 @@ export default function Board(props) {
       setCurrentPlayer(nxtPly)
     }
 
-    function getNextPlayerIndex(){
+    function getNextPlayerIndex(){ // use reverse logic
       if(reversed === false){
         const currentIndex = currentPlayer
         let nextIndex = currentIndex + 1
@@ -210,14 +210,14 @@ export default function Board(props) {
       setWinner(winner)
 
       let oldWinners = [...winners]
-      oldWinners.push(winner)
+      oldWinners.push(winner) // update winners array
       setWinners(oldWinners)
 
       if(gameNum < numGames){
-        await delay(500)
+        await delay(500) // if sim more than one game, continue with another
         reinitialiseGame()
       } else{
-        setFinishedGame(true)
+        setFinishedGame(true) // enable back to menu button
       }
     }
 

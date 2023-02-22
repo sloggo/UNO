@@ -17,28 +17,28 @@ export default function DataGrapher(props) {
     const [playerWins, setPlayerWins] = useState()
 
     function formatLogToNumberOfColours(){
-        const colouredLog = log.filter(card => card.colour || (card === "red" || card === "blue" || card === "yellow" || card === "green"));
+        const colouredLog = log.filter(card => card.colour || (card === "red" || card === "blue" || card === "yellow" || card === "green")); // array of coloured cards
         let abstractedLog = [];
         
         colouredLog.forEach(item => {
             let newItem = {}
             if(item.colour){
-                newItem = {colour: item.colour}
+                newItem = {colour: item.colour} // log only the colour
             } else{
-                newItem = {colour: item}
+                newItem = {colour: item} // if item is a plus four
             }
-            abstractedLog.push(newItem)
+            abstractedLog.push(newItem) // add to data pile
         })
 
         setColoursLog([...abstractedLog])
     }
 
     function formatLogToNumberOfNumbers(){
-        const numberedLog = log.filter(card => card.num);
+        const numberedLog = log.filter(card => (card.num || card.num === 0)); // if card has a num or is 0
         let abstractedLog = [];
         
         numberedLog.forEach(item => {
-            let newItem = {}
+            let newItem = {} // abstract just number value
             if(item.num){
                 newItem = {num: item.num}
             }
@@ -54,7 +54,7 @@ export default function DataGrapher(props) {
         let yellow = 0
         let green = 0
 
-        coloursLog.forEach(card => {
+        coloursLog.forEach(card => { // count frequency of each colour
             if(card.colour === "red"){
                 red++
             } else if(card.colour === "blue"){
@@ -66,7 +66,7 @@ export default function DataGrapher(props) {
             }
         })
         
-        let noColours = []
+        let noColours = [] // create array of data
         noColours.push(red,blue,yellow,green)
 
         setColoursData([...noColours])
@@ -85,7 +85,7 @@ export default function DataGrapher(props) {
         let zero = 0
 
         numbersLog.forEach(card => {
-            if(card.num === 1){
+            if(card.num === 1){ // count freq of numbered cards
                 one++
             } else if(card.num === 2){
                 two++
@@ -109,13 +109,13 @@ export default function DataGrapher(props) {
         })
         
         let noNums = []
-        noNums.push(one, two, three, four, five, six, seven, eight, nine, zero)
+        noNums.push(one, two, three, four, five, six, seven, eight, nine, zero) // create array of frequencies
 
         setNumbersData([...noNums])
     }
 
     function formatWinnersData(){
-        let newWinningData = players.map(player => {
+        let newWinningData = players.map(player => { // for each player, create an object with their position and number of wins abstract rest of data
             let noWins = winners.filter(win => win === player.player).length
             let playerData = {position: player.player+1, noWins: noWins}
             return playerData
@@ -125,11 +125,11 @@ export default function DataGrapher(props) {
     }
 
     function seperateWinningData(){
-        setPlayerLabels(winningData.map(player => String(player.position)))
-        setPlayerWins(winningData.map(player => player.noWins))
+        setPlayerLabels(winningData.map(player => String(player.position))) // extract only labels of positions
+        setPlayerWins(winningData.map(player => player.noWins)) //  extract only win numbers
     }
 
-    useEffect(() => {
+    useEffect(() => { // update values if they are changed
         setLog(props.log)
         setWinners(props.winners)
         setPlayers(props.players)
@@ -139,7 +139,7 @@ export default function DataGrapher(props) {
     }, [props])
 
     useEffect(() => {
-        if(coloursLog){
+        if(coloursLog){ // to stop it running with errors if no data is available
             formatNoColoursData()
         }
 
@@ -155,13 +155,13 @@ export default function DataGrapher(props) {
   return (
     <div className='dataDiv'>
         <div className='barChartDiv'>
-            <Doughnut
+            <Doughnut // graphing library
                 data={{
                     labels: ["Red", "Blue", "Yellow", "Green"],
                     datasets: [{
                     label: 'Frequency of Colour',
                     data: coloursData,
-                    backgroundColor: [
+                    backgroundColor: [ // colours of items
                         'rgba(178,34,34, 0.2)',
                         'rgba(137, 207, 240, 0.2)',
                         'rgba(255, 191, 0, 0.2)',

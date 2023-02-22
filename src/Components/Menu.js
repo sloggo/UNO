@@ -3,12 +3,12 @@ import React, { useState } from 'react'
 import Board from "./Board"
 
 export default function Menu() {
-    const [currentTab, setCurrentTab] = useState("main")
-    const [playerName, setPlayerName] = useState("Player")
+    const [currentTab, setCurrentTab] = useState("main") // uses this to keep track of what tab the player is on
+    const [playerName, setPlayerName] = useState("Player") // default values
     const [numPlayer, setNumPlayer] = useState(4)
     const [numGames, setNumGames] = useState(1)
     const [startCards, setStartCards] = useState(9)
-    const [playing, setPlaying] = useState(false)
+    const [playing, setPlaying] = useState(false) // trigger board component
 
     function selectSinglePlayer(){
         setCurrentTab("singleplayer")
@@ -27,7 +27,7 @@ export default function Menu() {
     }
 
     function updateName(event){
-        setPlayerName(event.target.value)
+        setPlayerName(event.target.value) // updates state to value entered by user
     }
 
     function updateNumPlayer(event){
@@ -46,7 +46,7 @@ export default function Menu() {
         setStartCards(event.target.value)
     }
 
-    function finishedGame(){
+    function finishedGame(){ // reset values to default
         setPlaying(false)
         setPlayerName("Player")
         setNumGames(1)
