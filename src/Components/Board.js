@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import "./Board.css"
+import DataGrapher from './DataGrapher';
 import unoDeck from "./deck.json";
 import PlayerDeck from './PlayerDeck'; 
 
@@ -7,7 +8,7 @@ export default function Board(props) {
     const [playing, setPlaying] = useState(true)
     const [deck, setDeck] = useState(unoDeck)
     const [currentCard, setCurrentCard] = useState(deck[Math.floor(Math.random()*deck.length)])
-    const [log, setLog] = useState(currentCard)
+    const [log, setLog] = useState([currentCard])
     const [players, setPlayers] = useState([{"player": 0, "skipped": false , "isBot": false, "current": true},
     {"player": 1, "skipped": false , "isBot": true, "current": false},
     {"player": 2, "skipped": false , "isBot": true, "current": false},
@@ -22,6 +23,7 @@ export default function Board(props) {
 
     async function playerPlayCard(card, skip){
       if(playing){
+        logCard(card)
         await delay(1000);
         if(card === "pickUp"){
           toggleCurrentPlayer(currentPlayer, getNextPlayerIndex())
@@ -72,7 +74,6 @@ export default function Board(props) {
 
           toggleCurrentPlayer(currentPlayer, getNextPlayerIndex()) // current = false on last current player 
         }
-        logCard(card)
       }
     }
 
@@ -183,6 +184,7 @@ export default function Board(props) {
       <div className='current-card-div'>
         { playing && <img className="current-card" src={currentCard.image} width={100}></img>}
       </div>
+      <DataGrapher log={log}></DataGrapher>
     </>
   )
 }
