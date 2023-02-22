@@ -9,22 +9,24 @@ export default function Board(props) {
     const [deck, setDeck] = useState(unoDeck)
     const [currentCard, setCurrentCard] = useState(deck[Math.floor(Math.random()*deck.length)])
     const [log, setLog] = useState([currentCard])
-    const [players, setPlayers] = useState(setPlayersArray())
+    const [players, setPlayers] = useState([...setPlayersArray()])
     const [currentPlayer , setCurrentPlayer] = useState(0)
     const [reversed, setReversed] = useState(false)
     const [winner, setWinner] = useState(null)
+    const [mode, setMode] = useState(props.mode)
 
     const delay = ms => new Promise(
       resolve => setTimeout(resolve, ms)
     );
 
+    useEffect(() =>{
+      setMode(props.mode)
+    }, [props])
+
     function reinitialiseGame(resetStats = false){
       setPlaying(true)
       setCurrentCard(deck[Math.floor(Math.random()*deck.length)])
-      setPlayers([{"player": 0, "skipped": false , "isBot": true, "current": true},
-        {"player": 1, "skipped": false , "isBot": true, "current": false},
-        {"player": 2, "skipped": false , "isBot": true, "current": false},
-        {"player": 3, "skipped": false , "isBot": true, "current": false}])
+      setPlayers(setPlayersArray())
       setCurrentPlayer(0)
       setReversed(false)
       setWinner(null)
@@ -34,19 +36,20 @@ export default function Board(props) {
     }
 
     function setPlayersArray(){
-      const numPlayers = props.numPlayers;
+      const numPlayers = props.numPlayer;
       const playerName = props.playerName;
-      let players = [];
+      let newPlayers = [];
 
-      for(let i=0; i<=numPlayers; i++){
-        if(i = 0){
-          players.push({"player": i, "skipped": false , "isBot": true, "current": true, "name": playerName})
+      for(let i=0; i < numPlayers; i++){
+        if(i === 0){
+          newPlayers.push({"player": i, "skipped": false , "isBot": false, "current": true, "name": playerName})
         } else{
-          players.push({"player": i, "skipped": false , "isBot": true, "current": false, "name": "Bot".concat(i)})
+          newPlayers.push({"player": i, "skipped": false , "isBot": true, "current": false, "name": "Bot".concat(i)})
         }
       }
+      console.log(newPlayers)
 
-      return players
+      return newPlayers
     }
 
     async function playerPlayCard(card, skip){
@@ -202,12 +205,12 @@ export default function Board(props) {
   return (
     <div className='gameDiv'>
       <div className='boardDiv'>
-        { playing && <h2 className='current-go'>It's your go: {currentPlayer}!</h2>}
+        { playing && <h2 className='current-go'>It's your go: {players.find(player => player.player === currentPlayer).name}!</h2>}
         <div className='boardDivContents'>
           { !playing && <h1>{winner} Wins!</h1>}
           <div className='playerDecks'>
             {playing && players.map((player) => {
-              return <PlayerDeck confirmWin={confirmWin} currentPlayer={currentPlayer} skipped={player.skipped} deck={deck} key={player.player} id={player.player} currentCard={currentCard} current={player.current} isBot={player.isBot} playerPlayCard={playerPlayCard}></PlayerDeck>
+              return <PlayerDeck name={player.name}confirmWin={confirmWin} currentPlayer={currentPlayer} skipped={player.skipped} deck={deck} key={player.player} id={player.player} currentCard={currentCard} current={player.current} isBot={player.isBot} playerPlayCard={playerPlayCard}></PlayerDeck>
             })}
           </div>
         </div>

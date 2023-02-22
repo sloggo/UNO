@@ -12,10 +12,6 @@ export default function Menu() {
         setCurrentTab("singleplayer")
     }
 
-    function selectMultiPlayer(){
-        setCurrentTab("multiplayer")
-    }
-
     function selectSim(){
         setCurrentTab("sim")
     }
@@ -50,10 +46,6 @@ export default function Menu() {
                     Play Singleplayer
                 </div>
 
-                <div className="menuButton" onClick={selectMultiPlayer}>
-                    Play Multiplayer
-                </div>
-
                 <div className="menuButton" onClick={selectSim}>
                     Simulation Mode
                 </div>
@@ -82,16 +74,6 @@ export default function Menu() {
             </div>
         </div>}
 
-        {currentTab === "multiplayer" && <div className="main">
-            <h2>Multiplayer</h2>
-            <div className="menuButtonsDiv">
-
-                <div className="menuButton" onClick={selectMain}>
-                    Back
-                </div>
-            </div>
-        </div>}
-
         {currentTab === "sim" && <div className="main">
             <h2>Simulation Mode</h2>
             <div className="menuButtonsDiv">
@@ -112,7 +94,7 @@ export default function Menu() {
             </div>
         </div>}
     </div>}
-    {playing && <Board playerName={playerName} numPlayer={numPlayer} playing={playing}></Board>}
+    {playing && <Board playerName={playerName} mode={currentTab} numPlayer={numPlayer} playing={playing}></Board>}
     </>
   )
 }

@@ -40,26 +40,27 @@ export default function PlayerDeck(props) {
     );
 
     function checkWin(){
-      if(cards.length === 0){
-        props.confirmWin(props.id)
+      if(cards.length === 0){ // check if player has no card left
+        props.confirmWin(props.id) // pass winner to board
       }
     }
 
     async function unoTimer(){
       if(Uno === true){
-        await delay(5000)
-        if(!confirmUno){
-          pickUp(2)
+        await delay(5000) // if player doesnt click uno within 5s
+        if(confirmUno !== true){
+          pickUp(2) // pickup two
         }
-        setConfirmUno(false)
+        setConfirmUno(false) // reset
+        setUno(false)
       }
     }
 
     function checkUno(){
       if(cards.length === 1){
-        setUno(true)
+        setUno(true)  // sets uno state
         if(isBot){
-          botConfirmUno()
+          botConfirmUno() // trigger bot algo
         }
       } else{
         setUno(false)
@@ -240,7 +241,7 @@ export default function PlayerDeck(props) {
   return (
     <div className='playerDeckContainer'>
       { Uno && <h2>UNO!</h2>} 
-      { isPlayer ? <h2 className='activePlayer'>{props.id}</h2> : <h2>{props.id}</h2>}
+      { isPlayer ? <h2 className='activePlayer'>{props.name}</h2> : <h2>{props.name}</h2>}
       <div className='player-deck'>
         { !isBot && <img src="Images/backside.png" width={70} onClick={()=> pickUp(1)}></img>}
         {cards.map((card) => {
