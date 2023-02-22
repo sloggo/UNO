@@ -2,12 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import Board from './Components/Board';
+import Menu from './Components/Menu';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Board noPlayers={4}>
-      
-    </Board>
+    <Menu></Menu>
   </React.StrictMode>
 );

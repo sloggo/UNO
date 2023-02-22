@@ -5,14 +5,11 @@ import unoDeck from "./deck.json";
 import PlayerDeck from './PlayerDeck'; 
 
 export default function Board(props) {
-    const [playing, setPlaying] = useState(true)
+    const [playing, setPlaying] = useState(props.playing)
     const [deck, setDeck] = useState(unoDeck)
     const [currentCard, setCurrentCard] = useState(deck[Math.floor(Math.random()*deck.length)])
     const [log, setLog] = useState([currentCard])
-    const [players, setPlayers] = useState([{"player": 0, "skipped": false , "isBot": true, "current": true},
-    {"player": 1, "skipped": false , "isBot": true, "current": false},
-    {"player": 2, "skipped": false , "isBot": true, "current": false},
-    {"player": 3, "skipped": false , "isBot": true, "current": false}])
+    const [players, setPlayers] = useState(setPlayersArray())
     const [currentPlayer , setCurrentPlayer] = useState(0)
     const [reversed, setReversed] = useState(false)
     const [winner, setWinner] = useState(null)
@@ -20,6 +17,37 @@ export default function Board(props) {
     const delay = ms => new Promise(
       resolve => setTimeout(resolve, ms)
     );
+
+    function reinitialiseGame(resetStats = false){
+      setPlaying(true)
+      setCurrentCard(deck[Math.floor(Math.random()*deck.length)])
+      setPlayers([{"player": 0, "skipped": false , "isBot": true, "current": true},
+        {"player": 1, "skipped": false , "isBot": true, "current": false},
+        {"player": 2, "skipped": false , "isBot": true, "current": false},
+        {"player": 3, "skipped": false , "isBot": true, "current": false}])
+      setCurrentPlayer(0)
+      setReversed(false)
+      setWinner(null)
+      if(resetStats){
+        setLog(currentCard)
+      }
+    }
+
+    function setPlayersArray(){
+      const numPlayers = props.numPlayers;
+      const playerName = props.playerName;
+      let players = [];
+
+      for(let i=0; i<=numPlayers; i++){
+        if(i = 0){
+          players.push({"player": i, "skipped": false , "isBot": true, "current": true, "name": playerName})
+        } else{
+          players.push({"player": i, "skipped": false , "isBot": true, "current": false, "name": "Bot".concat(i)})
+        }
+      }
+
+      return players
+    }
 
     async function playerPlayCard(card, skip){
       if(playing){
