@@ -170,7 +170,6 @@ export default function Board(props) {
       setLog(newLog)
     }
 
-
   return (
     <>
       <div className='boardDiv'>{props.noPlayers} Players</div>
@@ -184,7 +183,6 @@ export default function Board(props) {
       <div className='current-card-div'>
         { playing && <img className="current-card" src={currentCard.image} width={100}></img>}
       </div>
-      <NumGraph log={log}></NumGraph>
     </>
   )
 }
