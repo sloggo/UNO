@@ -7,6 +7,7 @@ export default function Board(props) {
     const [playing, setPlaying] = useState(true)
     const [deck, setDeck] = useState(unoDeck)
     const [currentCard, setCurrentCard] = useState(deck[Math.floor(Math.random()*deck.length)])
+    const [log, setLog] = useState(currentCard)
     const [players, setPlayers] = useState([{"player": 0, "skipped": false , "isBot": false, "current": true},
     {"player": 1, "skipped": false , "isBot": true, "current": false},
     {"player": 2, "skipped": false , "isBot": true, "current": false},
@@ -71,6 +72,7 @@ export default function Board(props) {
 
           toggleCurrentPlayer(currentPlayer, getNextPlayerIndex()) // current = false on last current player 
         }
+        logCard(card)
       }
     }
 
@@ -162,6 +164,13 @@ export default function Board(props) {
       setWinner(winner)
     }
 
+    function logCard(card){
+      let newLog = [...log]
+      newLog.push(card)
+      setLog(newLog)
+    }
+
+
   return (
     <>
       <div className='boardDiv'>{props.noPlayers} Players</div>
@@ -175,6 +184,7 @@ export default function Board(props) {
       <div className='current-card-div'>
         { playing && <img className="current-card" src={currentCard.image} width={100}></img>}
       </div>
+      <NumGraph log={log}></NumGraph>
     </>
   )
 }
