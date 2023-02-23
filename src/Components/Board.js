@@ -18,7 +18,32 @@ export default function Board(props) {
     const [numGames, setNumGames] = useState(props.numGames)
     const [gameNum, setGameNum] = useState(1)
     const [winners, setWinners] = useState([])
+    const [times, setTimes] = useState([])
     const [finishedGame, setFinishedGame] = useState(false)
+    const [timerSeconds, setTimerSeconds] = useState(0);
+    const [timerIsActive, setTimerIsActive] = useState(false);
+  
+    function timerToggle() {
+      setTimerIsActive(!timerIsActive);
+    }
+  
+    function timerReset() {
+      setTimerSeconds(0);
+      setTimerIsActive(false);
+    }
+  
+    useEffect(() => {
+      let interval = null;
+      if (timerIsActive) {
+        interval = setInterval(() => {
+          setTimerSeconds(timerSeconds => timerSeconds + 1);
+        }, 1000);
+      } else if (!timerIsActive && timerSeconds !== 0) {
+        clearInterval(interval);
+      }
+      return () => clearInterval(interval);
+    }, [timerIsActive, timerSeconds]);
+  
 
     const delay = ms => new Promise(
       resolve => setTimeout(resolve, ms)
@@ -32,6 +57,7 @@ export default function Board(props) {
 
     function reinitialiseGame(resetStats = false){ //  set all states back to default
       setPlaying(true)
+      timerToggle()
       setCurrentCard(deck[Math.floor(Math.random()*deck.length)])
       setPlayers(setPlayersArray())
       setCurrentPlayer(0)
@@ -203,11 +229,18 @@ export default function Board(props) {
     }
 
     async function confirmWin(winner){
+      let time = timerSeconds
+      timerToggle()
+      timerReset()
       let oldgameNum = gameNum
       console.log(oldgameNum++)
       setGameNum(oldgameNum++)
       setPlaying(false)
       setWinner(winner)
+
+      let oldTimes = [...times]
+      oldTimes.push(time) // update times array
+      setTimes(oldTimes)
 
       let oldWinners = [...winners]
       oldWinners.push(winner) // update winners array
@@ -248,7 +281,8 @@ export default function Board(props) {
         </div>
       </div>
       
-      <DataGrapher log={log} winners={winners} players={players}></DataGrapher>
+      <DataGrapher times={times} log={log} winners={winners} players={players}></DataGrapher>
     </div>
   )
 }
+

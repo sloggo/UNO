@@ -8,6 +8,7 @@ export default function DataGrapher(props) {
     const [log, setLog] = useState([...props.log])
     const [winners, setWinners] = useState(props.winners)
     const [players, setPlayers] = useState(props.players)
+    const [times, setTimes] = useState(props.times)
     const [coloursLog, setColoursLog] = useState()
     const [numbersLog, setNumbersLog] = useState()
     const [coloursData, setColoursData] = useState()
@@ -15,6 +16,7 @@ export default function DataGrapher(props) {
     const [winningData, setWinningData] = useState()
     const [playerLabels, setPlayerLabels] = useState()
     const [playerWins, setPlayerWins] = useState()
+    const [timingLabels, setTimingLabels] = useState([])
 
     function formatLogToNumberOfColours(){
         const colouredLog = log.filter(card => card.colour || (card === "red" || card === "blue" || card === "yellow" || card === "green")); // array of coloured cards
@@ -129,13 +131,19 @@ export default function DataGrapher(props) {
         setPlayerWins(winningData.map(player => player.noWins)) //  extract only win numbers
     }
 
+    function seperateTimingData(){
+        setTimingLabels(times.map((item, index) => String(index+1)))
+    }
+
     useEffect(() => { // update values if they are changed
         setLog(props.log)
         setWinners(props.winners)
         setPlayers(props.players)
+        setTimes(props.times)
         formatLogToNumberOfColours()
         formatLogToNumberOfNumbers()
         formatWinnersData()
+        seperateTimingData()
     }, [props])
 
     useEffect(() => {
@@ -250,6 +258,58 @@ export default function DataGrapher(props) {
             />
         </div>
         
+        <div className='barChartDiv'>
+            <Bar
+                data={{
+                    labels: timingLabels,
+                    datasets: [{
+                    label: 'Times of Games',
+                    data: times,
+                    backgroundColor: [
+                        'rgba(0, 129, 167, 0.2)',
+                        'rgba(0, 175, 185, 0.2)',
+                        'rgba(132, 165, 157, 0.2)',
+                        'rgba(246, 189, 96, 0.2)',
+                        'rgba(240, 113, 103, 0.2)',
+                        
+                    ],
+                    borderColor: [
+                        'rgb(0, 129, 167)',
+                        'rgb(0, 175, 185)',
+                        'rgb(132, 165, 157)',
+                        'rgb(246, 189, 96)',
+                        'rgb(240, 113, 103)',
+                    ],
+                    borderWidth: 1
+                    }] 
+                }}
+                height={500}
+                width={500}
+                options={{
+                    maintainAspectRatio: false,
+                    legend: {
+                        labels: {
+                            fontSize: 25,
+                        },
+                    },
+                    scales: {
+                        y: {
+                          title: {
+                            display: true,
+                            text: 'Time'
+                          }
+                        },
+                        x: {
+                            title: {
+                              display: true,
+                              text: 'Game Number'
+                            }
+                          }
+                      }     
+                }}
+            />
+        </div>
+
         <div className='barChartDiv'>
             <Bar
                 data={{
