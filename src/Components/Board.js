@@ -23,8 +23,12 @@ export default function Board(props) {
     const [timerSeconds, setTimerSeconds] = useState(0);
     const [timerIsActive, setTimerIsActive] = useState(false);
   
-    function timerToggle() {
-      setTimerIsActive(!timerIsActive);
+    function timerToggle(override) {
+      if(override){
+        setTimerIsActive(override)
+      }else{
+        setTimerIsActive(!timerIsActive);
+      }
     }
   
     function timerReset() {
@@ -37,7 +41,7 @@ export default function Board(props) {
       if (timerIsActive) {
         interval = setInterval(() => {
           setTimerSeconds(timerSeconds => timerSeconds + 1);
-        }, 1000);
+        }, 1);
       } else if (!timerIsActive && timerSeconds !== 0) {
         clearInterval(interval);
       }
@@ -57,7 +61,7 @@ export default function Board(props) {
 
     function reinitialiseGame(resetStats = false){ //  set all states back to default
       setPlaying(true)
-      timerToggle()
+      timerToggle(true)
       setCurrentCard(deck[Math.floor(Math.random()*deck.length)])
       setPlayers(setPlayersArray())
       setCurrentPlayer(0)
@@ -65,6 +69,8 @@ export default function Board(props) {
       setWinner(null)
       if(resetStats){
         setLog(currentCard)
+        setTimes(null)
+        setWinners(null)
       }
     }
 
@@ -230,7 +236,7 @@ export default function Board(props) {
 
     async function confirmWin(winner){
       let time = timerSeconds
-      timerToggle()
+      timerToggle(false)
       timerReset()
       let oldgameNum = gameNum
       console.log(oldgameNum++)

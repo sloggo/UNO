@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Bar, Chart, Doughnut } from 'react-chartjs-2'
+import { Bar, Chart, Doughnut, Scatter } from 'react-chartjs-2'
 import { Chart as ChartJS } from 'chart.js/auto'
 import "../Components/DataGrapher.css"
 
@@ -17,6 +17,7 @@ export default function DataGrapher(props) {
     const [playerLabels, setPlayerLabels] = useState()
     const [playerWins, setPlayerWins] = useState()
     const [timingLabels, setTimingLabels] = useState([])
+    const [meanGameTime, setMeanGameTime] = useState()
 
     function formatLogToNumberOfColours(){
         const colouredLog = log.filter(card => card.colour || (card === "red" || card === "blue" || card === "yellow" || card === "green")); // array of coloured cards
@@ -133,6 +134,12 @@ export default function DataGrapher(props) {
 
     function seperateTimingData(){
         setTimingLabels(times.map((item, index) => String(index+1)))
+
+        let sum = 0;
+        times.forEach(time => {
+            sum = sum+time
+        })
+        setMeanGameTime(sum/times.length)
     }
 
     useEffect(() => { // update values if they are changed
@@ -257,58 +264,6 @@ export default function DataGrapher(props) {
                 }}
             />
         </div>
-        
-        <div className='barChartDiv'>
-            <Bar
-                data={{
-                    labels: timingLabels,
-                    datasets: [{
-                    label: 'Times of Games',
-                    data: times,
-                    backgroundColor: [
-                        'rgba(0, 129, 167, 0.2)',
-                        'rgba(0, 175, 185, 0.2)',
-                        'rgba(132, 165, 157, 0.2)',
-                        'rgba(246, 189, 96, 0.2)',
-                        'rgba(240, 113, 103, 0.2)',
-                        
-                    ],
-                    borderColor: [
-                        'rgb(0, 129, 167)',
-                        'rgb(0, 175, 185)',
-                        'rgb(132, 165, 157)',
-                        'rgb(246, 189, 96)',
-                        'rgb(240, 113, 103)',
-                    ],
-                    borderWidth: 1
-                    }] 
-                }}
-                height={500}
-                width={500}
-                options={{
-                    maintainAspectRatio: false,
-                    legend: {
-                        labels: {
-                            fontSize: 25,
-                        },
-                    },
-                    scales: {
-                        y: {
-                          title: {
-                            display: true,
-                            text: 'Time'
-                          }
-                        },
-                        x: {
-                            title: {
-                              display: true,
-                              text: 'Game Number'
-                            }
-                          }
-                      }     
-                }}
-            />
-        </div>
 
         <div className='barChartDiv'>
             <Bar
@@ -361,8 +316,60 @@ export default function DataGrapher(props) {
                 }}
             />
         </div>
+
+        <div className='barChartDiv'>
+            <Scatter
+                data={{
+                    labels: timingLabels,
+                    datasets: [{
+                    label: 'Time of game (ms)',
+                    data: times,
+                    backgroundColor: [
+                        'rgba(0, 129, 167, 0.2)',
+                        'rgba(0, 175, 185, 0.2)',
+                        'rgba(132, 165, 157, 0.2)',
+                        'rgba(246, 189, 96, 0.2)',
+                        'rgba(240, 113, 103, 0.2)',
+                        
+                    ],
+                    borderColor: [
+                        'rgb(0, 129, 167)',
+                        'rgb(0, 175, 185)',
+                        'rgb(132, 165, 157)',
+                        'rgb(246, 189, 96)',
+                        'rgb(240, 113, 103)',
+                    ],
+                    borderWidth: 1
+                    }] 
+                }}
+                height={500}
+                width={500}
+                options={{
+                    maintainAspectRatio: false,
+                    legend: {
+                        labels: {
+                            fontSize: 25,
+                        },
+                    },
+                    scales: {
+                        y: {
+                          title: {
+                            display: true,
+                            text: 'Time (milliseconds)'
+                          }
+                        },
+                        x: {
+                            title: {
+                              display: true,
+                              text: 'Game Number'
+                            }
+                          }
+                      }     
+                }}
+            />
+            <p>Mean game time: {meanGameTime}ms</p>
+        </div>
     </div>
-    
-    
+
   )
 }
