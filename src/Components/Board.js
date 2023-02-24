@@ -111,7 +111,7 @@ export default function Board(props) {
         logCard(card)
         !(mode === "sim") ? await delay(1000) : await delay(1) ;
         if(card === "pickUp"){
-          toggleCurrentPlayer(currentPlayer, getNextPlayerIndex())
+          resetSkipPlayer(currentPlayer, getNextPlayerIndex())
         } else if(card.skip){
           setCurrentCard(card)
           toggleSkipPlayer(currentPlayer, getNextPlayerIndex()) // turn on skip for next player
@@ -288,7 +288,7 @@ export default function Board(props) {
           { finishedGame && <button onClick={props.finishedGame}>Back to menu</button>}
           <div className='playerDecks'>
             {playing && players.map((player) => {
-              return <PlayerDeck startCards={props.startCards} mode={mode} name={player.name}confirmWin={confirmWin} currentPlayer={currentPlayer} skipped={player.skipped} deck={deck} key={player.player} id={player.player} currentCard={currentCard} current={player.current} isBot={player.isBot} playerPlayCard={playerPlayCard}></PlayerDeck>
+              return <PlayerDeck resetSkipPlayer={resetSkipPlayer} startCards={props.startCards} mode={mode} name={player.name}confirmWin={confirmWin} currentPlayer={currentPlayer} skipped={player.skipped} deck={deck} key={player.player} id={player.player} currentCard={currentCard} current={player.current} isBot={player.isBot} playerPlayCard={playerPlayCard}></PlayerDeck>
             })}
           </div>
         </div>

@@ -13,6 +13,8 @@ export default function PlayerDeck(props) {
     const [Uno, setUno] = useState(false)
     const [confirmUno, setConfirmUno] = useState(false)
 
+    let failJobId = undefined;
+
     useEffect(() => {
       setBot(props.isBot)
       setCurrentPlayer(props.currentPlayer);
@@ -32,7 +34,9 @@ export default function PlayerDeck(props) {
     }, [cards])
 
     useEffect(() => {
-      unoTimer()
+      if(Uno === true){
+        unoTimer()
+      }
     }, [Uno])
 
     const delay = ms => new Promise(
@@ -46,21 +50,28 @@ export default function PlayerDeck(props) {
     }
 
     async function unoTimer(){
-      if(Uno === true){
-        await delay(5000) // if player doesnt click uno within 5s
-        unoPickUpCheck()
-        setUno(false)
+      if(Uno === true && !isBot){
+        failJobId = setTimeout(() => { // set auto lose, so then if player clicks uno, it cancelles the loss
+          setUno(false);
+          console.log('Lost!');
+        }, 1000);
+        console.log(failJobId);
+      } else if(Uno === true && !isBot){
+        let result = botConfirmUno()
+        if(result === false){
+          pickUp(2)
+        }
       }
     }
 
-    function unoPickUpCheck(){
+    async function unoPickUpCheck(){
       if(confirmUno === false){
         pickUp(2)
+        setConfirmUno({state: false})
       }
-      setConfirmUno(false)
     }
 
-    function checkUno(){
+    const checkUno = () => {
       if(cards.length === 1){
         setUno(true)  // sets uno state
         if(isBot){
@@ -72,7 +83,11 @@ export default function PlayerDeck(props) {
     }
 
     function confirmUnoClick(){
-      setConfirmUno(true)
+      if (Uno && failJobId) {
+        console.log(failJobId);
+        setConfirmUno(true);
+        clearTimeout(failJobId);
+      }
     }
 
     function playerSkipped(){
@@ -169,7 +184,7 @@ export default function PlayerDeck(props) {
     }
 
     async function pickUp(plusNum){
-      if(isPlayer || Uno){
+      if(isPlayer || (Uno && confirmUno === false)){
         let newCards = [...cards] // copy to not interfere with react states
         for (let i = 0 ; i < plusNum; i++){
           newCards.push(randomCard()) // add a new random card
@@ -223,7 +238,9 @@ export default function PlayerDeck(props) {
     function botConfirmUno(){
       const randomNum = Math.random(1,10)
       if(randomNum <= 9){
-        setConfirmUno(true)
+        return true
+      } else{
+        return false
       }
     }
 
@@ -254,7 +271,7 @@ export default function PlayerDeck(props) {
       </div>
 
       { choosingColour && <div> <button onClick={() => colourChosen("red")}>RED</button> <button onClick={() => colourChosen("blue")}>BLUE</button> <button onClick={() => colourChosen("yellow")}>YELLOW</button> <button onClick={() => colourChosen("green")}>GREEN</button></div>}
-      { !confirmUno && !isBot && Uno && <button onClick={confirmUnoClick}>UNO!</button>}
+      { !confirmUno && !isBot && Uno && <button onClick={() => confirmUnoClick()}>UNO!</button>}
     </div>
   )
 }
