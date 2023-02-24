@@ -108,7 +108,7 @@ export default function Menu() {
         </div>}
 
         {currentTab === "multiplayer" && <div className="main">
-            <h2>Multiplayer 1v1</h2>
+            <h2>2 Player Multiplayer</h2>
             <p>Enter your names and begin playing!</p>
 
             <input type="text" placeholder="Name" onChange={updateName}></input>

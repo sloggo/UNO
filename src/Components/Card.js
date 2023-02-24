@@ -10,7 +10,7 @@ export default function Card(props) {
 
   useEffect(()=>{
     setCard(props.card)
-    if(props.isPlayer && props.mode === "multiplayer" && !props.isSkipped){
+    if(!props.isBot && props.isPlayer && props.mode === "multiplayer"){
       setShowMultiPlayerCard(true)
     } else if(!props.isPlayer && props.mode === "multiplayer"){
       setShowMultiPlayerCard(false)
@@ -20,7 +20,7 @@ export default function Card(props) {
   return (
     <>
         { props.mode !== "multiplayer" && (!props.isBot || (props.mode === "sim") ? <img src={card.image} width={70} onClick={cardHandleClick}></img> : <img src={"Images/backside.png"} width={70}></img>) }
-        { props.mode === "multiplayer" && showMultiPlayerCard ? <img src={card.image} width={70} onClick={cardHandleClick}></img> : <img src={"Images/backside.png"} width={70}></img> }
+        { props.mode === "multiplayer" && (showMultiPlayerCard ? <img src={card.image} width={70} onClick={cardHandleClick}></img> : <img src={"Images/backside.png"} width={70}></img>) }
     </>
   )
 }

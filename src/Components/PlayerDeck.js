@@ -48,12 +48,16 @@ export default function PlayerDeck(props) {
     async function unoTimer(){
       if(Uno === true){
         await delay(5000) // if player doesnt click uno within 5s
-        if(confirmUno !== true){
-          pickUp(2) // pickup two
-        }
-        setConfirmUno(false) // reset
+        unoPickUpCheck()
         setUno(false)
       }
+    }
+
+    function unoPickUpCheck(){
+      if(confirmUno === false){
+        pickUp(2)
+      }
+      setConfirmUno(false)
     }
 
     function checkUno(){
