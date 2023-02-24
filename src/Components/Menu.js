@@ -5,6 +5,7 @@ import Board from "./Board"
 export default function Menu() {
     const [currentTab, setCurrentTab] = useState("main") // uses this to keep track of what tab the player is on
     const [playerName, setPlayerName] = useState("Player") // default values
+    const [player2Name, setPlayer2Name] = useState("Player 2")
     const [numPlayer, setNumPlayer] = useState(4)
     const [numGames, setNumGames] = useState(1)
     const [startCards, setStartCards] = useState(9)
@@ -12,6 +13,10 @@ export default function Menu() {
 
     function selectSinglePlayer(){
         setCurrentTab("singleplayer")
+    }
+
+    function selectMultiPlayer(){
+        setCurrentTab("multiplayer")
     }
 
     function selectSim(){
@@ -28,6 +33,11 @@ export default function Menu() {
 
     function updateName(event){
         setPlayerName(event.target.value) // updates state to value entered by user
+    }
+
+    function updateName2(event){
+        setPlayer2Name(event.target.value) // updates state to value entered by user
+        setNumPlayer(2)
     }
 
     function updateNumPlayer(event){
@@ -65,6 +75,10 @@ export default function Menu() {
                     Play Singleplayer
                 </div>
 
+                <div className="menuButton" onClick={selectMultiPlayer}>
+                    Play Multiplayer
+                </div>
+
                 <div className="menuButton" onClick={selectSim}>
                     Simulation Mode
                 </div>
@@ -81,6 +95,24 @@ export default function Menu() {
 
             <input type="text" placeholder="Name" onChange={updateName}></input>
             <input type="number" placeholder="No. Players" max="8" min="2" onChange={updateNumPlayer}></input>
+
+            <div className="menuButtonsDiv">
+                <div className="menuButton" onClick={beginSinglePlayer}>
+                    Begin
+                </div>
+
+                <div className="menuButton" onClick={selectMain}>
+                    Back
+                </div>
+            </div>
+        </div>}
+
+        {currentTab === "multiplayer" && <div className="main">
+            <h2>Multiplayer 1v1</h2>
+            <p>Enter your names and begin playing!</p>
+
+            <input type="text" placeholder="Name" onChange={updateName}></input>
+            <input type="text" placeholder="Name2" onChange={updateName2}></input>
 
             <div className="menuButtonsDiv">
                 <div className="menuButton" onClick={beginSinglePlayer}>
@@ -121,7 +153,7 @@ export default function Menu() {
             </div>
         </div>}
     </div>}
-    {playing && <Board startCards={startCards} finishedGame={finishedGame} numGames={numGames} playerName={playerName} mode={currentTab} numPlayer={numPlayer} playing={playing}></Board>}
+    {playing && <Board mode={currentTab} player2Name={player2Name} playerName={playerName} numPlayer={numPlayer} numGames={numGames} startCards={startCards} playing={playing}></Board>}
     </>
   )
 }

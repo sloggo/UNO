@@ -77,20 +77,29 @@ export default function Board(props) {
     function setPlayersArray(){
       const numPlayers = props.numPlayer;
       const playerName = props.playerName;
+      const player2Name = props.player2Name;
       let newPlayers = [];
 
-      for(let i=0; i < numPlayers; i++){
-        if(i === 0){
-          if(!(props.mode === "sim")){
-            newPlayers.push({"player": i, "skipped": false , "isBot": false, "current": true, "name": playerName})
-          } else{
-            newPlayers.push({"player": i, "skipped": false , "isBot": true, "current": true, "name": "Bot".concat(i)})
+      if(props.mode === "multiplayer"){
+        newPlayers.push({"player": 0, "skipped": false , "isBot": false, "current": true, "name": playerName})
+        newPlayers.push({"player": 1, "skipped": false , "isBot": false, "current": false, "name": player2Name})
+      } else{
+        for(let i=0; i < numPlayers; i++){
+            if(i === 0){
+              if(!(props.mode === "sim")){
+    
+                newPlayers.push({"player": i, "skipped": false , "isBot": false, "current": true, "name": playerName})
+    
+              } else {
+    
+                newPlayers.push({"player": i, "skipped": false , "isBot": true, "current": true, "name": "Bot".concat(i)})
+    
+              }
+            } else{
+              newPlayers.push({"player": i, "skipped": false , "isBot": true, "current": false, "name": "Bot".concat(i)})
+            }
           }
-        } else{
-          newPlayers.push({"player": i, "skipped": false , "isBot": true, "current": false, "name": "Bot".concat(i)})
-        }
       }
-      console.log(newPlayers)
 
       return newPlayers
     }
@@ -222,7 +231,7 @@ export default function Board(props) {
         let nextIndex = currentIndex - 1
 
         if(nextIndex < 0){
-          nextIndex = 3
+          nextIndex = players.length-1
         }
 
         return nextIndex

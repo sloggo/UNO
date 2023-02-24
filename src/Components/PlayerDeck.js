@@ -18,7 +18,7 @@ export default function PlayerDeck(props) {
       setCurrentPlayer(props.currentPlayer);
       setIsPlayer(props.current)
       setIsSkipped(props.skipped)
-    })
+    }, [props])
 
     useEffect(() => {
       if(isSkipped){
