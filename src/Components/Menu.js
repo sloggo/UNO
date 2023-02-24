@@ -153,7 +153,7 @@ export default function Menu() {
             </div>
         </div>}
     </div>}
-    {playing && <Board mode={currentTab} player2Name={player2Name} playerName={playerName} numPlayer={numPlayer} numGames={numGames} startCards={startCards} playing={playing}></Board>}
+    {playing && <Board finishedGame={finishedGame} mode={currentTab} player2Name={player2Name} playerName={playerName} numPlayer={numPlayer} numGames={numGames} startCards={startCards} playing={playing}></Board>}
     </>
   )
 }
