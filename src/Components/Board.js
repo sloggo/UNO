@@ -22,6 +22,7 @@ export default function Board(props) {
     const [finishedGame, setFinishedGame] = useState(false)
     const [timerSeconds, setTimerSeconds] = useState(0);
     const [timerIsActive, setTimerIsActive] = useState(false);
+    const [placableCard, setPlacableCard]= useState(true)
   
     function timerToggle(override) {
       if(override){
@@ -108,6 +109,7 @@ export default function Board(props) {
 
     async function playerPlayCard(card, skip){
       if(playing){
+        setPlacableCard(false)
         logCard(card)
         !(mode === "sim") ? await delay(1000) : await delay(1) ;
         if(card === "pickUp"){
@@ -159,6 +161,7 @@ export default function Board(props) {
 
           toggleCurrentPlayer(currentPlayer, getNextPlayerIndex()) // current = false on last current player 
         }
+        setPlacableCard(true)
       }
     }
 
@@ -288,7 +291,7 @@ export default function Board(props) {
           { finishedGame && <button onClick={props.finishedGame}>Back to menu</button>}
           <div className='playerDecks'>
             {playing && players.map((player) => {
-              return <PlayerDeck resetSkipPlayer={resetSkipPlayer} startCards={props.startCards} mode={mode} name={player.name}confirmWin={confirmWin} currentPlayer={currentPlayer} skipped={player.skipped} deck={deck} key={player.player} id={player.player} currentCard={currentCard} current={player.current} isBot={player.isBot} playerPlayCard={playerPlayCard}></PlayerDeck>
+              return <PlayerDeck placableCard={placableCard} resetSkipPlayer={resetSkipPlayer} startCards={props.startCards} mode={mode} name={player.name}confirmWin={confirmWin} currentPlayer={currentPlayer} skipped={player.skipped} deck={deck} key={player.player} id={player.player} currentCard={currentCard} current={player.current} isBot={player.isBot} playerPlayCard={playerPlayCard}></PlayerDeck>
             })}
           </div>
         </div>

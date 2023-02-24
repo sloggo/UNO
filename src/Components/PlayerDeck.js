@@ -116,22 +116,26 @@ export default function PlayerDeck(props) {
     }
 
     function clickCard(card) {
-      console.log(card)
-      if (validateMove(card)){ // if the move is valid
-        if(card.changeColour === true){ // if card is +4 or wild
-          if(card.plusNum === 4){
+      if(props.placableCard){
+        console.log(card)
+        if (validateMove(card)){ // if the move is valid
+          if(card.changeColour === true){ // if card is +4 or wild
+            if(card.plusNum === 4){
+              removeFromDeck(card) // remove it from the deck
+              colourChoose("skip") // enable skip and initiate choose colour ui
+            } else{
+              removeFromDeck(card) // remove it from the deck
+              colourChoose() // inititate colour choose ui
+            }
+          }else{
+            props.playerPlayCard(card) // pass up to board to change current card
             removeFromDeck(card) // remove it from the deck
-            colourChoose("skip") // enable skip and initiate choose colour ui
-          } else{
-            removeFromDeck(card) // remove it from the deck
-            colourChoose() // inititate colour choose ui
           }
-        }else{
-          props.playerPlayCard(card) // pass up to board to change current card
-          removeFromDeck(card) // remove it from the deck
+        } else{
+          console.log("Not valid card")
         }
       } else{
-        console.log("Not valid card")
+        console.log("card already played")
       }
     }
 
