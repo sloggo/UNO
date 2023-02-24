@@ -82,7 +82,9 @@ export default function Board(props) {
 
       if(props.mode === "multiplayer"){
         newPlayers.push({"player": 0, "skipped": false , "isBot": false, "current": true, "name": playerName})
-        newPlayers.push({"player": 1, "skipped": false , "isBot": false, "current": false, "name": player2Name})
+        newPlayers.push({"player": 1, "skipped": false , "isBot": true, "current": false, "name": "Bot1"})
+        newPlayers.push({"player": 2, "skipped": false , "isBot": false, "current": false, "name": player2Name})
+        newPlayers.push({"player": 3, "skipped": false , "isBot": true, "current": false, "name": "Bot2"})
       } else{
         for(let i=0; i < numPlayers; i++){
             if(i === 0){
@@ -221,7 +223,7 @@ export default function Board(props) {
         const currentIndex = currentPlayer
         let nextIndex = currentIndex + 1
 
-        if(players.length < nextIndex+1){
+        if(players.length -1 < nextIndex){
           nextIndex = 0
         }
 
