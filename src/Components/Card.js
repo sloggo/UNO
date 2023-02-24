@@ -10,7 +10,7 @@ export default function Card(props) {
 
   useEffect(()=>{
     setCard(props.card)
-    if(props.isPlayer && props.mode === "multiplayer"){
+    if(props.isPlayer && props.mode === "multiplayer" && !props.isSkipped){
       setShowMultiPlayerCard(true)
     } else if(!props.isPlayer && props.mode === "multiplayer"){
       setShowMultiPlayerCard(false)
