@@ -5,6 +5,7 @@ import unoDeck from "./deck.json";
 import PlayerDeck from './PlayerDeck'; 
 
 export default function Board(props) {
+  // set default values for board
     const [playing, setPlaying] = useState(props.playing)
     const [deck, setDeck] = useState(unoDeck)
     const [currentCard, setCurrentCard] = useState(deck[Math.floor(Math.random()*deck.length)])
@@ -33,7 +34,7 @@ export default function Board(props) {
     }
   
     function timerReset() {
-      setTimerSeconds(0);
+      setTimerSeconds(0); // reset timer count
       setTimerIsActive(false);
     }
   
@@ -41,10 +42,10 @@ export default function Board(props) {
       let interval = null;
       if (timerIsActive) {
         interval = setInterval(() => {
-          setTimerSeconds(timerSeconds => timerSeconds + 1);
+          setTimerSeconds(timerSeconds => timerSeconds + 1); // increase timer by 1 every ms
         }, 1);
       } else if (!timerIsActive && timerSeconds !== 0) {
-        clearInterval(interval);
+        clearInterval(interval); // reset timer
       }
       return () => clearInterval(interval);
     }, [timerIsActive, timerSeconds]);
@@ -81,7 +82,7 @@ export default function Board(props) {
       const player2Name = props.player2Name;
       let newPlayers = [];
 
-      if(props.mode === "multiplayer"){
+      if(props.mode === "multiplayer"){ // hardcoded multiplayer players, if i had more time i would make it dynamic
         newPlayers.push({"player": 0, "skipped": false , "isBot": false, "current": true, "name": playerName})
         newPlayers.push({"player": 1, "skipped": false , "isBot": true, "current": false, "name": "Bot1"})
         newPlayers.push({"player": 2, "skipped": false , "isBot": false, "current": false, "name": player2Name})
@@ -89,11 +90,11 @@ export default function Board(props) {
       } else{
         for(let i=0; i < numPlayers; i++){
             if(i === 0){
-              if(!(props.mode === "sim")){
+              if(!(props.mode === "sim")){ // if not sim, add player
     
                 newPlayers.push({"player": i, "skipped": false , "isBot": false, "current": true, "name": playerName})
     
-              } else {
+              } else { // else let all other players be bots
     
                 newPlayers.push({"player": i, "skipped": false , "isBot": true, "current": true, "name": "Bot".concat(i)})
     
@@ -109,11 +110,11 @@ export default function Board(props) {
 
     async function playerPlayCard(card, skip){
       if(playing){
-        setPlacableCard(false)
+        setPlacableCard(false) // to stop players from playing multiple cards in one go
         logCard(card)
-        !(mode === "sim") ? await delay(1000) : await delay(1) ;
+        !(mode === "sim") ? await delay(1000) : await delay(1) ; // speed up simulation / slow down singleplayer
         if(card === "pickUp"){
-          resetSkipPlayer(currentPlayer, getNextPlayerIndex())
+          resetSkipPlayer(currentPlayer, getNextPlayerIndex()) // skip player if picked up
         } else if(card.skip){
           setCurrentCard(card)
           toggleSkipPlayer(currentPlayer, getNextPlayerIndex()) // turn on skip for next player
@@ -155,13 +156,13 @@ export default function Board(props) {
           resetSkipPlayer(currentPlayer, getNextPlayerIndex())
         }else if(card.type === "reverse"){
           setCurrentCard(card)
-          toggleReverse()
+          toggleReverse() // change reverse direction
         }else{
           setCurrentCard(card)
 
           toggleCurrentPlayer(currentPlayer, getNextPlayerIndex()) // current = false on last current player 
         }
-        setPlacableCard(true)
+        setPlacableCard(true) // allow next player to play card
       }
     }
 

@@ -29,7 +29,7 @@ export default function PlayerDeck(props) {
     }, [isSkipped])
 
     useEffect(() => {
-      checkUno()
+      checkUno() // everytime game state updated, check for uno and wins
       checkWin()
     }, [cards])
 
@@ -64,13 +64,6 @@ export default function PlayerDeck(props) {
       }
     }
 
-    async function unoPickUpCheck(){
-      if(confirmUno === false){
-        pickUp(2)
-        setConfirmUno({state: false})
-      }
-    }
-
     const checkUno = () => {
       if(cards.length === 1){
         setUno(true)  // sets uno state
@@ -85,7 +78,7 @@ export default function PlayerDeck(props) {
     function confirmUnoClick(){
       if (Uno && failJobId) {
         console.log(failJobId);
-        setConfirmUno(true);
+        setConfirmUno(true); // stop fail timer and allow them to move on without picking up 2
         clearTimeout(failJobId);
       }
     }

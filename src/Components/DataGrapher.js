@@ -118,8 +118,8 @@ export default function DataGrapher(props) {
     }
 
     function formatWinnersData(){
-        let newWinningData = players.map(player => { // for each player, create an object with their position and number of wins abstract rest of data
-            let noWins = winners.filter(win => win === player.player).length
+            let newWinningData = players.map(player => { // for each player, create an object with their position and
+            let noWins = winners.filter(win => win === player.player).length // number of wins abstract rest of data
             let playerData = {position: player.player+1, noWins: noWins}
             return playerData
         })
