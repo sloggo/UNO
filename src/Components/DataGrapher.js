@@ -133,7 +133,7 @@ export default function DataGrapher(props) {
     }
 
     function seperateTimingData(){
-        setTimingLabels(times.map((item, index) => String(index+1)))
+        setTimingLabels(times.map((item, index) => String(index+1))) // set labels as string num of games
 
         let sum = 0;
         times.forEach(time => {
