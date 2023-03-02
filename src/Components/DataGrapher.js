@@ -18,6 +18,12 @@ export default function DataGrapher(props) {
     const [playerWins, setPlayerWins] = useState()
     const [timingLabels, setTimingLabels] = useState([])
     const [meanGameTime, setMeanGameTime] = useState()
+    const [numObjURL, setNumObjURL] = useState()
+    const [numColURL, setNumColURL] = useState()
+    const [playerLabelURL, setPlayerLabelURL] = useState()
+    const [playerWinsURL, setPlayerWinsURL] = useState()
+    const [timerLabelURL, setTimerLabelURL] = useState()
+    const [gameTimesURL, setGameTimesURL] = useState()
 
     function formatLogToNumberOfColours(){
         const colouredLog = log.filter(card => card.colour || (card === "red" || card === "blue" || card === "yellow" || card === "green")); // array of coloured cards
@@ -72,6 +78,9 @@ export default function DataGrapher(props) {
         let noColours = [] // create array of data
         noColours.push(red,blue,yellow,green)
 
+        const blob = new Blob([noColours], { type: 'text/csv;charset=utf-8,' })
+        setNumColURL(URL.createObjectURL(blob))
+
         setColoursData([...noColours])
     }
 
@@ -114,6 +123,10 @@ export default function DataGrapher(props) {
         let noNums = []
         noNums.push(one, two, three, four, five, six, seven, eight, nine, zero) // create array of frequencies
 
+        const blob = new Blob([noNums], { type: 'text/csv;charset=utf-8,' })
+        setNumObjURL(URL.createObjectURL(blob))
+
+
         setNumbersData([...noNums])
     }
 
@@ -129,11 +142,23 @@ export default function DataGrapher(props) {
 
     function seperateWinningData(){
         setPlayerLabels(winningData.map(player => String(player.position))) // extract only labels of positions
+        const blob = new Blob([playerLabels], { type: 'text/csv;charset=utf-8,' })
+        setPlayerLabelURL(URL.createObjectURL(blob))
+
         setPlayerWins(winningData.map(player => player.noWins)) //  extract only win numbers
+        const blob2 = new Blob([playerWins], { type: 'text/csv;charset=utf-8,' })
+        setPlayerWinsURL(URL.createObjectURL(blob2))
     }
 
     function seperateTimingData(){
         setTimingLabels(times.map((item, index) => String(index+1))) // set labels as string num of games
+
+        const blob = new Blob([timingLabels], { type: 'text/csv;charset=utf-8,' })
+        setTimerLabelURL(URL.createObjectURL(blob))
+
+        const blob2 = new Blob([times], { type: 'text/csv;charset=utf-8,' })
+        setGameTimesURL(URL.createObjectURL(blob2))
+
 
         let sum = 0;
         times.forEach(time => {
@@ -202,6 +227,7 @@ export default function DataGrapher(props) {
                     },
                 }}
             />
+            <a href={numColURL} download="numColours.csv">Download Data to CSV</a>
         </div>
 
         <div className='barChartDiv'>
@@ -263,6 +289,7 @@ export default function DataGrapher(props) {
                       }   
                 }}
             />
+            <a href={numObjURL} download="numNumbers.csv">Download Data to CSV</a>
         </div>
 
         <div className='barChartDiv'>
@@ -315,6 +342,9 @@ export default function DataGrapher(props) {
                       }     
                 }}
             />
+            <a href={playerLabelURL} download="playerPositionLabels.csv">Download labels to CSV</a>
+            <br></br>
+            <a href={playerWinsURL} download="playerWins.csv">Download win data to CSV</a>
         </div>
 
         <div className='barChartDiv'>
@@ -367,6 +397,10 @@ export default function DataGrapher(props) {
                       }     
                 }}
             />
+            <a href={timerLabelURL} download="gameTimeLabels.csv">Download labels to CSV</a>
+            <br></br>
+            <a href={gameTimesURL} download="gameTimes.csv">Download win data to CSV</a>
+            <br></br>
             <p>Mean game time: {meanGameTime}ms</p>
         </div>
     </div>
