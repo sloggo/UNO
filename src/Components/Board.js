@@ -246,7 +246,39 @@ export default function Board(props) {
 
     function toggleReverse(){
       let current = reversed
-      setReversed(!current, toggleCurrentPlayer(currentPlayer, getNextPlayerIndex()))
+      setReversed(!current)
+      const currentIndex = currentPlayer
+      let nextIndex = null
+
+      if(!current === true){
+        nextIndex = currentIndex - 1
+
+        if(nextIndex < 0){
+          nextIndex = players.length-1
+        }
+      } else{
+        nextIndex = currentIndex + 1
+
+        if(players.length -1 < nextIndex){
+          nextIndex = 0
+        }
+      }
+
+      let curPlayerEdit = {...players[currentIndex]}
+      let nxtPlayerEdit = {...players[nextIndex]}
+
+      let newPlayers = [...players]
+
+      curPlayerEdit.current = false
+      newPlayers.splice(currentIndex, 1, curPlayerEdit) 
+
+      nxtPlayerEdit.current = true
+      newPlayers.splice(nextIndex, 1, nxtPlayerEdit)
+
+      console.log("updated players",newPlayers)
+
+      setPlayers(newPlayers)
+      setCurrentPlayer(nextIndex)
     }
 
     async function confirmWin(winner){
