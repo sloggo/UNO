@@ -7,7 +7,8 @@ import PlayerDeck from './PlayerDeck';
 export default function Board(props) {
     const [playing, setPlaying] = useState(props.playing)
     const [deck, setDeck] = useState(unoDeck)
-    const [currentCard, setCurrentCard] = useState(deck[Math.floor(Math.random()*deck.length)])
+    const [colouredDeck, setColouredDeck] = useState(unoDeck.filter(card=> card.colour))
+    const [currentCard, setCurrentCard] = useState(colouredDeck[Math.floor(Math.random()*deck.length)])
     const [log, setLog] = useState([currentCard])
     const [players, setPlayers] = useState([...setPlayersArray()])
     const [currentPlayer , setCurrentPlayer] = useState(0)
