@@ -82,10 +82,6 @@ export default function Menu() {
                 <div className="menuButton" onClick={selectSim}>
                     Simulation Mode
                 </div>
-
-                <div className="menuButton" onClick={selectSettings}>
-                    Settings
-                </div>
             </div>
         </div>}
 
@@ -136,16 +132,6 @@ export default function Menu() {
                 <div className="menuButton" onClick={beginSinglePlayer}>
                     Begin
                 </div>
-
-                <div className="menuButton" onClick={selectMain}>
-                    Back
-                </div>
-            </div>
-        </div>}
-
-        {currentTab === "settings" && <div className="main">
-            <h2>Settings</h2>
-            <div className="menuButtonsDiv">
 
                 <div className="menuButton" onClick={selectMain}>
                     Back

@@ -9,6 +9,7 @@ export default function Card(props) {
   }
 
   useEffect(()=>{
+    console.log("fromhere")
     setCard(props.card)
     if(!props.isBot && props.isPlayer && props.mode === "multiplayer"){
       setShowMultiPlayerCard(true)
