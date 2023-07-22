@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/UNO/static/css/main.7ce35ecb.css",
+    "main.js": "/UNO/static/js/main.f3f18b0b.js",
+    "index.html": "/UNO/index.html",
+    "main.7ce35ecb.css.map": "/UNO/static/css/main.7ce35ecb.css.map",
+    "main.f3f18b0b.js.map": "/UNO/static/js/main.f3f18b0b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7ce35ecb.css",
+    "static/js/main.f3f18b0b.js"
+  ]
+}
